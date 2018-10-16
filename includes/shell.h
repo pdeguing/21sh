@@ -1,29 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/15 12:31:23 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/16 12:08:59 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/16 12:09:02 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef SHELL_H
+# define SHELL_H
 
-int		main(int ac, char **av, char **env)
+# include "../libft/includes/libft.h"
+
+/*
+** LEXER
+*/
+
+typedef enum e_type			t_type;
+
+enum						e_type
 {
-	(void)ac;
-	(void)env;
-	(void)av;
-//	init_21sh();
-//	while (1)
-//	{
-//		put_prompt();
-//		get_command_line();
-		parse_get_ast("ls -la ~/github\n");
-//		execute();
-//	}
-	return (0);
-}
+	NEWLINE,
+	IO_NUMBER,
+	TOKEN
+};
+
+typedef struct s_token		t_token;
+
+struct						s_token
+{
+	int						type;
+	char					*value;
+};
+
+t_token						*lex_get_token(char **pstr);
+
+/*
+** PARSER
+*/
+
+void	parse_get_ast(const char *command_line);
+
+#endif
