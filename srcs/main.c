@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 12:31:23 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/16 12:08:59 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/17 12:50:35 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int		main(int ac, char **av, char **env)
 //	{
 //		put_prompt();
 //		get_command_line();
-		parse_get_ast("ls -la ~/github\n");
+		ft_printf("command: %s\n\n", STR_TEST);
+		parse_get_ast(STR_TEST);
 //		execute();
 //	}
 	return (0);

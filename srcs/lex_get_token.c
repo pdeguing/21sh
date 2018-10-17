@@ -6,12 +6,49 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 11:22:44 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/17 10:38:02 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/17 12:48:04 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+int			lex_get_token(char **head, t_token *token)
+{
+	char	*current_char;
+
+	current_char = *head;
+	while (*current_char != '\0')
+	{
+		if (*current_char == ' ' || *current_char == '	')
+			current_char++;
+		if (*current_char == '\n')
+			return (lex_get_nl(head, current_char, token));
+		// IO_NUMBER
+		// OPERATOR
+		else
+			return (lex_get_word(head, current_char, token));
+	}
+	return (0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------ Initial draft ------------------------------
+ 
 t_token			*lex_get_token(char **pstr)
 {
 	t_token		*token;
@@ -40,8 +77,8 @@ t_token			*lex_get_token(char **pstr)
 			token->value[j] = '\0';
 			break ;
 		}
-		/* else if (str[i] == '\\' || str[i] == '\'' || str[i] == '\"') */
-		/* else if (str[i] == '$' || str[i] == '`') */
+		// else if (str[i] == '\\' || str[i] == '\'' || str[i] == '\"')
+		// else if (str[i] == '$' || str[i] == '`')
 		else if (is_operator(str[i]))
 		{
 			if (ft_strlen(token->value) != 0)
@@ -74,7 +111,7 @@ t_token			*lex_get_token(char **pstr)
 			i++;
 			j++;
 		}
-		/* else if (str[i] == '#') */
+		// else if (str[i] == '#')
 		else
 		{
 			token->type = TOKEN;
@@ -92,3 +129,4 @@ t_token			*lex_get_token(char **pstr)
 	*pstr = &str[i];
 	return (token);
 }
+*/
