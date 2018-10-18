@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:17:42 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/18 08:23:49 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/18 12:47:03 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,23 @@ int		lex_get_word(char **pstr, char *current_char, t_token *token)
 {
 	char	*first_char;
 	int		i;
+	unsigned char	quote_status;
 
 
+	quote_status = 0;
 	token->type = TOKEN;
 	first_char = current_char;
 	i = 0;
-	while (*current_char != '\0' && *current_char != ' ' && *current_char != '\n')
+	while (*current_char != '\0' && *current_char != '\n')
 	{
+		if (!quote_status && ft_strchr(";|<>", *current_char))
+			break ;
+		else if (!quote_status && ft_strchr(" 	", *current_char))
+			break ;
+		else if (*current_char == '\'')
+			quote_status ^= B_SQUOTE;
+		else if (*current_char == '\"')
+			quote_status ^= B_DQUOTE;
 		current_char++;
 		i++;
 	}
@@ -89,7 +99,7 @@ int		lex_get_operator(char **pstr, char *current_char, t_token *token)
 			token->type = GREAT;
 	}
 	else
-		return (-1);
+		current_char++;
 	*pstr = current_char;
 	return (1);
 }

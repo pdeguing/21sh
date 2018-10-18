@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/18 08:30:20 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/18 12:47:05 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../libft/includes/libft.h"
 
-# define STR_TEST "mkdir test ; cd test ; ls -a ; ls | cat | wc -c > fifi ; cat fifi"
+# define STR_TEST "mkdir test ; cd test ; ls -a ; ls | 'cat | wc' -c > fifi ; <& >& && >> << >>&<> cat fifi"
 
 # define BLACK "\x1b[1m"
 # define BLUE "\x1b[0;34m"
@@ -28,6 +28,10 @@
 /*
 ** LEXER
 */
+
+# define B_BSLASH			0x01 /* 0b000'0001 */
+# define B_SQUOTE			0x02 /* 0b000'0010 */
+# define B_DQUOTE			0x04 /* 0b000'0100 */
 
 typedef enum e_type			t_type;
 
