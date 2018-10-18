@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 11:22:44 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/17 12:48:04 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/18 08:23:54 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int			lex_get_token(char **head, t_token *token)
 		if (*current_char == '\n')
 			return (lex_get_nl(head, current_char, token));
 		// IO_NUMBER
-		// OPERATOR
+		if (ft_strchr(";|<>&", *current_char))
+			return (lex_get_operator(head, current_char, token));
 		else
 			return (lex_get_word(head, current_char, token));
 	}

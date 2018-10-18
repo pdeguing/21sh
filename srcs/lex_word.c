@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:17:42 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/17 12:48:05 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/18 08:23:49 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,64 @@ int		lex_get_word(char **pstr, char *current_char, t_token *token)
 	return (1);
 }
 
-
 int		lex_get_nl(char **pstr, char *current_char, t_token *token)
 {
 	token->type = NEWLINE;
 	*pstr = current_char + 1;
+	return (1);
+}
+
+int		lex_get_operator(char **pstr, char *current_char, t_token *token)
+{
+	char	*first_char;
+	int		i;
+
+	first_char = current_char;
+	i = 0;
+	if (*current_char == ';')
+	{
+		token->type = SEMICOLON;
+		current_char++;
+	}
+	else if (*current_char == '|')
+	{
+		token->type = PIPELINE;
+		current_char++;
+	}
+	else if (*current_char == '<')
+	{
+		current_char++;
+		if (*current_char == '<')
+		{
+			token->type = DLESS;
+			current_char++;
+		}
+		else if (*current_char == '&')
+		{
+			token->type = LESSAND;
+			current_char++;
+		}
+		else
+			token->type = LESS;
+	}
+	else if (*current_char == '>')
+	{
+		current_char++;
+		if (*current_char == '<')
+		{
+			token->type = DGREAT;
+			current_char++;
+		}
+		else if (*current_char == '&')
+		{
+			token->type = GREATAND;
+			current_char++;
+		}
+		else
+			token->type = GREAT;
+	}
+	else
+		return (-1);
+	*pstr = current_char;
 	return (1);
 }
