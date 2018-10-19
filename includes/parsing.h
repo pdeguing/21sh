@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/15 12:31:23 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 12:36:47 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/19 08:54:55 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/19 12:13:43 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-int		main(int ac, char **av, char **env)
+# include "shell.h"
+
+/*
+** Abstract Syntax Tree
+*/
+
+typedef struct s_tree		t_tree;
+
+struct						s_tree
 {
-	(void)ac;
-	(void)env;
-	(void)av;
-//	init_21sh();
-//	while (1)
-//	{
-//		put_prompt();
-//		get_command_line();
-		ft_printf("command: %s\n\n", STR_2);
-		parse_get_ast(STR_2);
-//		execute();
-//	}
-	return (0);
-}
+	t_token					*token;
+	t_tree					*left;
+	t_tree					*right;
+};
+
+t_tree						*tree_new(t_token *token);
+void						tree_insert(t_tree **root, t_tree *new);
+
+#endif
