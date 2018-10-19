@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 09:04:48 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 12:51:23 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/19 15:05:55 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,41 +25,34 @@
 **				push_left_branch_down();
 */
 
+static int	precedence_cmp(t_tree *node1, t_tree *node2)
+{
+	int		type1;
+	int		type2;
+
+	type1 = node1->token->type;
+	type2 = node2->token->type;
+	if (LESS <= type1 && type1<= GREATAND)
+		type1 = LESS;
+	if (LESS <= type2 && type2 <= GREATAND)
+		type2 = LESS;
+	return (type1 - type2);
+}
+
 void		tree_insert(t_tree **root, t_tree *new)
 {
 	t_tree	*head;
 
 	head = *root;
-	/* Set root to first token */
 	if (head == NULL)
-	{
 		*root = new;
-	}
-	/* Push the left branch down one level */
-	else if (new->token->type >= head->token->type)
+	else if (precedence_cmp(new, head) > 0)
 	{
 		*root = new;
 		new->left = head;
 	}
-	else if (head->token->type == TOKEN)
-	{
-		/* Insert arguments as right child of command */
-		while (head->right != NULL)
-		{
-			head = head->right;
-		}
-		head->right = new;
-	}
-	/* Insert new node as pipe right child */
-	else if (head->token->type == PIPE)
-	{
+	else
 		tree_insert(&head->right, new);
-	}
-	/* Insert new node as right descendant */
-	else if (head->token->type == SEMICOLON)
-	{
-		tree_insert(&head->right, new);
-	}
 }
 
 
