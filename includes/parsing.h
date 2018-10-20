@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 08:54:55 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 17:04:41 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/20 07:33:35 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ void						tree_insert(t_tree **root, t_tree *new);
 ** Parser
 */
 
-void	parse(char *input);
+t_tree						*parse(char *input);
 
 #endif

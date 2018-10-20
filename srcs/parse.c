@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 17:04:21 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 17:04:25 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/20 07:40:33 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static void		catch_unexpected(t_token *prev, t_token *next)
 		exit(EXIT_FAILURE);
 }
 
-void	parse(char *input)
+t_tree	*parse(char *input)
 {
 	t_tree	*root;
 	t_token	*next;
 	t_token	*prev;
 
 	if (input == NULL)
-		return ;
+		return (NULL);
 	root = NULL;
 	prev = NULL;
 	while (token_get(&input, next = init_token()) == 1)
@@ -48,5 +48,5 @@ void	parse(char *input)
 		tree_insert(&root, tree_new(next));
 		prev = next;
 	}
-	tree_print(&root);
+	return (root);
 }

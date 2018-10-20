@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_print.c                                       :+:      :+:    :+:   */
+/*   init_gsh.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:02:10 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 07:02:13 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/20 07:44:32 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/20 07:45:07 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "shell.h"
 
-void	tree_print(t_tree **root)
+void		init_gsh(char **env)
 {
-	t_tree	*head;
-
-	head = *root;
-	if (head->left != NULL)
-		tree_print(&head->left);
-	ft_printf("%-20s > %s\n", g_strtype[head->token->type], head->token->literal);
-	if (head->right != NULL)
-		tree_print(&head->right);
+	init_g_env(env);
 }

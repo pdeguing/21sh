@@ -6,13 +6,14 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 17:01:47 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/20 07:53:54 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
+# include <stdio.h>
 # include "../libft/includes/libft.h"
 
 /*
@@ -28,7 +29,7 @@
 
 
 /*
-** Typedef
+** Typedefs
 */
 
 typedef struct s_tree		t_tree;
@@ -41,5 +42,22 @@ typedef enum e_type			t_type;
 
 # include "parsing.h"
 # include "debugging.h"
+# include "execute.h"
+
+/*
+** Environment
+*/
+
+char						**g_env;
+
+void						init_g_env(char **env);
+
+/*
+** Utilities
+*/
+
+void						put_prompt(void);
+
+void						init_gsh(char **env);
 
 #endif

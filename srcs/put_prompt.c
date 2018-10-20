@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_print.c                                       :+:      :+:    :+:   */
+/*   put_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:02:10 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 07:02:13 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/20 06:31:23 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/20 06:32:45 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "shell.h"
 
-void	tree_print(t_tree **root)
+void	put_prompt(void)
 {
-	t_tree	*head;
+	/*
+	char	*pwd;
+	char	*home;
+	*/
 
-	head = *root;
-	if (head->left != NULL)
-		tree_print(&head->left);
-	ft_printf("%-20s > %s\n", g_strtype[head->token->type], head->token->literal);
-	if (head->right != NULL)
-		tree_print(&head->right);
+	ft_printf(BLACK "21sh: " RESET);
+	/*
+	if ((pwd = get_varenv("PWD")) != NULL)
+	{
+		if ((home = get_varenv("HOME")) && ft_strstr(pwd, home))
+			ft_printf("~%s ", pwd + ft_strlen(home));
+		else
+			ft_printf("%s ", pwd);
+	}
+	*/
+	ft_printf(BLACK ">>> " RESET);
 }
