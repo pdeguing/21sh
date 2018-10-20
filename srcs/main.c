@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 12:31:23 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 12:36:47 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/19 16:57:04 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int		main(int ac, char **av, char **env)
 //	{
 //		put_prompt();
 //		get_command_line();
-		ft_printf("command: %s\n\n", STR_2);
-		parse_get_ast(STR_2);
+		ft_printf("command: %s\n\n", STR_3);
+		parse(STR_3);
 //		execute();
 //	}
 	return (0);

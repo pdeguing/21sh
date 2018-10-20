@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 15:05:57 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/19 17:01:47 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include "../libft/includes/libft.h"
 
-# define STR_TEST			"mkdir test ; cd test ; ls -a ; ls | 'cat | wc' -c > fifi ; <& >& && >> << >>&<> cat fifi"
-# define STR_1				"ls libft"
-# define STR_2				"ls ; echo hello"
+/*
+** Colors
+*/
 
 # define BLACK				"\x1b[1m"
 # define BLUE				"\x1b[0;34m"
@@ -28,69 +28,18 @@
 
 
 /*
-** LEXER
+** Typedef
 */
 
-# define B_BSLASH			0x01 /* 0b000'0001 */
-# define B_SQUOTE			0x02 /* 0b000'0010 */
-# define B_DQUOTE			0x04 /* 0b000'0100 */
-
+typedef struct s_tree		t_tree;
+typedef struct s_token		t_token;
 typedef enum e_type			t_type;
 
-enum						e_type
-{
-	DEFAULT,
-	NEWLINE,
-	IO_NUMBER,
-	TOKEN,
-	WORD,
-	LESS,
-	GREAT,
-	DLESS,
-	DGREAT,
-	LESSAND,
-	GREATAND,
-	PIPELINE,
-	SEMICOLON,
-	TOTAL_TYPE
-};
-
-static char						*g_strtype[TOTAL_TYPE] = {
-	[DEFAULT] = "default",
-	[NEWLINE] = "newline",
-	[IO_NUMBER] = "io_number",
-	[TOKEN] = BLUE"token"RESET,
-	[SEMICOLON] = RED"semicolon"RESET,
-	[PIPELINE] = PINK"pipeline"RESET,
-	[LESS] = PINK"less"RESET,
-	[GREAT] = PINK"great"RESET,
-	[DLESS] = PINK"dless"RESET,
-	[DGREAT] = PINK"dgreat"RESET,
-	[LESSAND] = PINK"lessand"RESET,
-	[GREATAND] = PINK"greatand"RESET,
-	[WORD] = BLUE"word"RESET
-};
-
-typedef struct s_token		t_token;
-
-struct						s_token
-{
-	int						type;
-	char					*literal;
-};
-
-int							lex_get_token(char **head, t_token *token);
-int							lex_get_word(char **pstr, char *current_char,
-		t_token *token);
-int							lex_get_nl(char **pstr, char *current_char,
-		t_token *token);
-int							lex_get_operator(char **pstr, char *current_char,
-		t_token *token);
-
 /*
-** PARSER
+** Intern headers
 */
 
-void	parse_get_ast(const char *command_line);
+# include "parsing.h"
+# include "debugging.h"
 
 #endif

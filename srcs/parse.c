@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_get_ast.c                                    :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 11:22:54 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 12:51:25 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/19 17:04:21 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/19 17:04:25 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,29 @@ static t_token	*init_token(void)
 	return (new);
 }
 
-void	parse_get_ast(const char *command_line)
+static void		catch_unexpected(t_token *prev, t_token *next)
 {
-	t_token	*next;
-	char	*head;
-	t_tree	*root;
-
-	if (command_line == NULL)
+	if (prev == NULL)
 		return ;
-	head = ft_strdup(command_line);
+	if (prev->type >= LESS && next->type >= LESS)
+		exit(EXIT_FAILURE);
+}
+
+void	parse(char *input)
+{
+	t_tree	*root;
+	t_token	*next;
+	t_token	*prev;
+
+	if (input == NULL)
+		return ;
 	root = NULL;
-	while (lex_get_token(&head, next = init_token()) == 1)
+	prev = NULL;
+	while (token_get(&input, next = init_token()) == 1)
 	{
+		catch_unexpected(prev, next);
 		tree_insert(&root, tree_new(next));
-		ft_printf("%-20s > %s\n", g_strtype[next->type], next->literal);
+		prev = next;
 	}
+	tree_print(&root);
 }

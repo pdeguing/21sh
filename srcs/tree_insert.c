@@ -6,24 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 09:04:48 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 15:05:55 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/19 16:44:25 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/*
-** For error checking, we can set a state of expectation, if new is not
-** expected, then we exit.
-*/
-
-/*
-** We will be able to make the rules clean by working with priority, indexing
-** the enum by order of priority from less to more so that we can just do:
-**
-** 		if (new->type >= head->type)
-**				push_left_branch_down();
-*/
 
 static int	precedence_cmp(t_tree *node1, t_tree *node2)
 {
@@ -54,13 +41,3 @@ void		tree_insert(t_tree **root, t_tree *new)
 	else
 		tree_insert(&head->right, new);
 }
-
-
-
-/*
-** Possibilities:
-**
-** 		-> root is NULL: we just insert new;
-** 		-> new >= head: we push head down new->left;
-** 		-> new < head: we call insert recursivily w/ head =  head->right; 
-*/

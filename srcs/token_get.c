@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_get_token.c                                    :+:      :+:    :+:   */
+/*   token_get.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 11:22:44 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/18 17:51:12 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/19 17:03:52 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/19 17:06:11 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int			lex_get_token(char **head, t_token *token)
+int			token_get(char **head, t_token *token)
 {
 	char	*current_char;
 
