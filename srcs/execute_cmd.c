@@ -6,13 +6,13 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:27:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 13:08:44 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/20 18:03:56 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-static void		execute_pipe(char **args, int *p)
+void		execute_cmd(char **args, char flag, int fd_read, int fd_write)
 {
 	pid_t		pid;
 
@@ -22,17 +22,18 @@ static void		execute_pipe(char **args, int *p)
 	if (pid == 0)
 	{
 		/* Temporary */
-		if (p[STDIN] != NO_PIPE)
+		if (fd_read != STDIN)
+		{
 			close(0);
-		if (p[STDOUT] != NO_PIPE)
+			dup(fd_read);
+			close(fd_read);
+		}
+		if (fd_write != STDOUT)
+		{
 			close(1);
-		if (p[STDIN] != NO_PIPE)
-			dup(p[STDIN]);
-		if (p[STDOUT] != NO_PIPE)
-			dup(p[STDOUT]);
-		close(p[STDIN]);
-		close(p[STDOUT]);
-
+			dup(fd_write);
+			close(fd_write);
+		}
 		if (execve(args[0], args, g_env) == -1)
 		{
 			perror(args[0]);
@@ -45,12 +46,13 @@ static void		execute_pipe(char **args, int *p)
 	}
 	if (pid > 0)
 	{
-		if (p[STDOUT] != NO_PIPE)
+		if (flag & ~WAIT)
 			return ;
 		wait(&pid);
 	}
 }
 
+/*
 void			execute_cmd(char **args)
 {
 	static int	p[2];
@@ -64,3 +66,4 @@ void			execute_cmd(char **args)
 		p[STDOUT] = NO_PIPE;
 	i++;
 }
+*/

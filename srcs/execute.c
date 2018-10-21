@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 06:40:28 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 13:08:46 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/20 17:50:26 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@
 
 void			execute(t_tree **root)
 {
-	execute_tree(root);
+	execute_tree(root, WAIT, STDIN, STDOUT);
 }
