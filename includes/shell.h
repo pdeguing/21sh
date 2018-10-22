@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 07:53:54 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/22 08:24:13 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHELL_H
 
 # include <stdio.h>
+# include <fcntl.h>
 # include "../libft/includes/libft.h"
 
 /*
@@ -51,6 +52,7 @@ typedef enum e_type			t_type;
 char						**g_env;
 
 void						init_g_env(char **env);
+char						*get_varenv(char *varname);
 
 /*
 ** Utilities

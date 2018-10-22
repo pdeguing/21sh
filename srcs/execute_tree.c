@@ -6,19 +6,46 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:42:57 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 18:03:56 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/22 08:24:11 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-char		**get_args(t_token *cmd)
+int			get_nbr_args(t_tree **root)
+{
+	t_tree	*head;
+	int		i;
+
+	i = 0;
+	head = *root;
+	while (head)
+	{
+		i++;
+		head = head->right;
+	}
+	return (i);
+}
+
+char		**get_args(t_tree **root)
 {
 	char	**args;
+	t_tree	*head;
+	int		size;
+	int		i;
 
-	args = malloc(sizeof(char *) * 2);
-	args[0] = cmd->literal;
-	args[1] = NULL;
+	size = get_nbr_args(root);
+	args = malloc(sizeof(char *) * size);
+	args[size] = NULL;
+	head = *root;
+	i = 0;
+	while (i < size)
+	{
+		args[i] = head->token->literal;
+		head = head->right;
+		i++;
+	}
+	ft_printf("LOOOL: %s\n", args[1]);
 	return (args);
 }
 
@@ -38,13 +65,14 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 {
 	t_tree	*head;
 	int		p[2];
+	int		fd;
 
 	head = *root;
 	if (!head)
 		return ;
 	// Execute cmd
-	if (!head->left && !head->right)
-		execute_cmd(get_args(head->token), flag, fd_read, fd_write);
+	if (!head->left)
+		execute_cmd(get_args(&head), flag, fd_read, fd_write);
 	if (head->token->type == SEMICOLON)
 	{
 		execute_tree(&head->left, flag, fd_read, fd_write);
@@ -55,5 +83,20 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 		pipe(p);
 		execute_tree(&head->left, flag ^ WAIT, fd_read, p[WRITE]);
 		execute_tree(&head->left, flag, p[READ], fd_write);
+	}
+	if (head->token->type == GREAT)
+	{
+		fd = open(head->right->token->literal, O_WRONLY);
+		execute_tree(&head->left, flag, fd_read, fd);
+	}
+	if (head->token->type == LESS)
+	{
+		fd = open(head->right->token->literal, O_RDONLY);
+		execute_tree(&head->left, flag, fd, fd_write);
+	}
+	if (head->token->type == DGREAT)
+	{
+		fd = open(head->right->token->literal, O_APPEND);
+		execute_tree(&head->left, flag, fd_read, fd);
 	}
 }

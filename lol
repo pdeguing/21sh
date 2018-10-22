@@ -1,0 +1,10 @@
+21sh
+21sh.en.pdf
+Makefile
+README.md
+author
+bash_source_code
+includes
+libft
+lol
+srcs

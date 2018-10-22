@@ -6,11 +6,67 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:27:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 18:03:56 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/22 08:24:12 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+char	**get_path(void)
+{
+	char	*path;
+
+	path = get_varenv("PATH");
+	if (path == NULL)
+		return (NULL);
+	return (ft_strsplit(path, ':'));
+}
+
+int		check_permissions(char *path)
+{
+	if (!access(path, F_OK) && access(path, X_OK))
+	{
+		ft_printf("%s: permission denied\n", path);
+		return (-1);
+	}
+	return (0);
+}
+
+int		try_path(char *path, char **args)
+{
+	path = ft_strffjoin(path, "/");
+	path = ft_strffjoin(path, args[0]);
+	if (check_permissions(path) == -1)
+		return (-2);
+	if (execve(path, args, g_env) == -1)
+		return (-1);
+	ft_strdel(&path);
+	return (0);
+}
+
+int		exec_allpath(char **args)
+{
+	int		i;
+	char	**allpath;
+
+	if (ft_strchr(args[0], '/'))
+	{
+		if (check_permissions(args[0]) == -1)
+			return (-2);
+		return (execve(args[0], args, g_env));
+	}
+	allpath = get_path();
+	if (allpath == NULL)
+		return (-1);
+	i = 0;
+	while (allpath[i] != NULL)
+	{
+		if (try_path(ft_strdup(allpath[i]), args) != -1)
+			return (0);
+		i++;
+	}
+	return (-1);
+}
 
 void		execute_cmd(char **args, char flag, int fd_read, int fd_write)
 {
@@ -34,13 +90,9 @@ void		execute_cmd(char **args, char flag, int fd_read, int fd_write)
 			dup(fd_write);
 			close(fd_write);
 		}
-		if (execve(args[0], args, g_env) == -1)
+		if (exec_allpath(args) == -1)
 		{
 			perror(args[0]);
-			/*
-			ft_putstr_fd(args[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			*/
 			exit(EXIT_FAILURE);
 		}
 	}
