@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 08:24:13 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/22 12:48:13 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef enum e_type			t_type;
 
 # include "parsing.h"
 # include "debugging.h"
+# include "builtins.h"
 # include "execute.h"
 
 /*
@@ -59,7 +60,13 @@ char						*get_varenv(char *varname);
 */
 
 void						put_prompt(void);
-
 void						init_gsh(char **env);
+
+/*
+** Signals
+*/
+
+void						handle_sig(int sig);
+void						handle_childsig(int sig);
 
 #endif

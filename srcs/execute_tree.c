@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:42:57 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 08:24:11 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/22 12:09:57 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char		**get_args(t_tree **root)
 	int		i;
 
 	size = get_nbr_args(root);
-	args = malloc(sizeof(char *) * size);
+	args = malloc(sizeof(char *) * (size + 1));
 	args[size] = NULL;
 	head = *root;
 	i = 0;
@@ -45,7 +45,6 @@ char		**get_args(t_tree **root)
 		head = head->right;
 		i++;
 	}
-	ft_printf("LOOOL: %s\n", args[1]);
 	return (args);
 }
 
@@ -73,30 +72,54 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 	// Execute cmd
 	if (!head->left)
 		execute_cmd(get_args(&head), flag, fd_read, fd_write);
-	if (head->token->type == SEMICOLON)
+	else if (head->token->type == SEMICOLON)
 	{
 		execute_tree(&head->left, flag, fd_read, fd_write);
 		execute_tree(&head->right, flag, fd_read, fd_write);
 	}
-	if (head->token->type == PIPELINE)
+	else if (head->token->type == PIPELINE)
 	{
-		pipe(p);
+		if (pipe(p) == -1)
+		{
+			perror("21sh");
+			exit(EXIT_FAILURE);
+		}
 		execute_tree(&head->left, flag ^ WAIT, fd_read, p[WRITE]);
-		execute_tree(&head->left, flag, p[READ], fd_write);
+		close(p[WRITE]);
+		execute_tree(&head->right, flag, p[READ], fd_write);
+		close(p[READ]);
 	}
-	if (head->token->type == GREAT)
+	else if (head->token->type == GREAT)
 	{
-		fd = open(head->right->token->literal, O_WRONLY);
+		fd = open(head->right->token->literal, O_WRONLY | O_CREAT, 0644);
+		if (fd == -1)
+		{
+			perror(head->right->token->literal);
+			exit(EXIT_FAILURE);
+		}
 		execute_tree(&head->left, flag, fd_read, fd);
+		close(fd);
 	}
-	if (head->token->type == LESS)
+	else if (head->token->type == LESS)
 	{
 		fd = open(head->right->token->literal, O_RDONLY);
+		if (fd == -1)
+		{
+			perror(head->right->token->literal);
+			exit(EXIT_FAILURE);
+		}
 		execute_tree(&head->left, flag, fd, fd_write);
+		close(fd);
 	}
-	if (head->token->type == DGREAT)
+	else if (head->token->type == DGREAT)
 	{
-		fd = open(head->right->token->literal, O_APPEND);
+		fd = open(head->right->token->literal, O_APPEND | O_CREAT, 0644);
+		if (fd == -1)
+		{
+			perror(head->right->token->literal);
+			exit(EXIT_FAILURE);
+		}
 		execute_tree(&head->left, flag, fd_read, fd);
+		close(fd);
 	}
 }

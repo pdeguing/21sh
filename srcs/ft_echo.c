@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 08:27:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:53:09 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/09/25 15:01:08 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/22 12:45:27 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "builtins.h"
 
-void		execute_cmd(char **args, char flag, int fd_read, int fd_write)
+int		ft_echo(char **args)
 {
 	int		i;
 
-	if (args == NULL || args[0] == NULL)
-		return ;
 	i = 0;
-	if (!ft_strchr(args[0], '/'))
+	while (args[i])
 	{
-		while (i < BUILTIN_NBR)
-		{
-			if (ft_strcmp(args[0], g_builtin_name[i]) == 0)
-			{
-				redirect_io(fd_read, fd_write);
-				g_builtin_func[i](args + 1);
-				return ;
-			}
-			i++;
-		}
+		ft_printf("%s", args[i]);
+		i++;
+		if (args[i])
+			ft_printf(" ");
 	}
-	execute_bin(args, flag, fd_read, fd_write);
+	ft_printf("\n");
+	return (0);
 }

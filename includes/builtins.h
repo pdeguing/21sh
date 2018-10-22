@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsh.c                                              :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:21:17 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/22 12:42:09 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/22 12:57:52 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-static void		gsh_loop(void)
-{
-	char		*line;
-	t_tree		*ast;
+# include "shell.h"
 
-	signal(SIGINT, handle_sig);
-	while (1)
-	{
-		put_prompt();
-		get_next_line(0, &line);
-//		get_command_line();
-		ast = parse(line);
-		execute(&ast);
-	}
-}
+int				ft_echo(char **args);
+int				ft_cd(char **args);
+int				ft_env(char **args);
+int				ft_setenv(char **args);
+int				ft_unsetenv(char **args);
+int				ft_exit(char **args);
 
-int		main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)av;
-
-	init_gsh(env);
-	gsh_loop();
-	return (0);
-}
+#endif

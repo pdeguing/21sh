@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
+/*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 08:27:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:53:09 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/22 12:13:39 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/22 12:14:59 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "shell.h"
 
-void		execute_cmd(char **args, char flag, int fd_read, int fd_write)
+void	handle_sig(int sig)
 {
-	int		i;
-
-	if (args == NULL || args[0] == NULL)
-		return ;
-	i = 0;
-	if (!ft_strchr(args[0], '/'))
+	if (sig == SIGINT)
 	{
-		while (i < BUILTIN_NBR)
-		{
-			if (ft_strcmp(args[0], g_builtin_name[i]) == 0)
-			{
-				redirect_io(fd_read, fd_write);
-				g_builtin_func[i](args + 1);
-				return ;
-			}
-			i++;
-		}
+		ft_printf("\n");
+		put_prompt();
+		signal(SIGINT, handle_sig);
 	}
-	execute_bin(args, flag, fd_read, fd_write);
+}
+
+void	handle_childsig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_printf("\n");
+		signal(SIGINT, handle_childsig);
+	}
 }

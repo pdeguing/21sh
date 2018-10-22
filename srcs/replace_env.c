@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
+/*   replace_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 08:27:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:53:09 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/09/28 16:10:43 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/22 12:47:05 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "builtins.h"
 
-void		execute_cmd(char **args, char flag, int fd_read, int fd_write)
+int		replace_env(char *arg)
 {
-	int		i;
+	char	*tmp;
+	char	**env;
 
-	if (args == NULL || args[0] == NULL)
-		return ;
-	i = 0;
-	if (!ft_strchr(args[0], '/'))
+	env = ft_pstrcchr(g_env, arg, '=');
+	if (env == NULL)
 	{
-		while (i < BUILTIN_NBR)
-		{
-			if (ft_strcmp(args[0], g_builtin_name[i]) == 0)
-			{
-				redirect_io(fd_read, fd_write);
-				g_builtin_func[i](args + 1);
-				return ;
-			}
-			i++;
-		}
+		ft_strdel(&arg);
+		return (0);
 	}
-	execute_bin(args, flag, fd_read, fd_write);
+	tmp = *env;
+	*env = arg;
+	free(tmp);
+	return (1);
 }

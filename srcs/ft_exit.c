@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsh.c                                              :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:21:17 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/09/25 15:04:08 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/22 12:45:53 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "builtins.h"
 
-static void		gsh_loop(void)
+int		ft_exit(char **args)
 {
-	char		*line;
-	t_tree		*ast;
-
-	signal(SIGINT, handle_sig);
-	while (1)
-	{
-		put_prompt();
-		get_next_line(0, &line);
-//		get_command_line();
-		ast = parse(line);
-		execute(&ast);
-	}
-}
-
-int		main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)av;
-
-	init_gsh(env);
-	gsh_loop();
-	return (0);
+	(void)args;
+	exit(EXIT_SUCCESS);
 }
