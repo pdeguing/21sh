@@ -6,11 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:27:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:53:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 07:52:30 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "shell.h"
 
 void		execute_cmd(char **args, char flag, int fd_read, int fd_write)
 {

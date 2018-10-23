@@ -6,11 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 15:01:55 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:57:54 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 07:52:56 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "shell.h"
 
 int		ft_cd(char **args)
 {
@@ -20,10 +20,10 @@ int		ft_cd(char **args)
 	{
 		old = get_varenv("OLDPWD");
 		if (old == NULL)
-			return (put_error("cd: OLDPWD not set", -1));
+			return (-1);
 		replace_env(ft_strfljoin("OLDPWD=", getcwd(NULL, 0)));
 		if (chdir(old) == -1)
-			return (put_error("cd: could not change directory", -1));
+			return (-1);
 	}
 	else
 	{
@@ -31,10 +31,10 @@ int		ft_cd(char **args)
 		if (args[0] == NULL)
 		{
 			if (chdir(get_varenv("HOME")) == -1)
-				return (put_error("cd: HOME not set", -1));
+				return (-1);
 		}
 		else if (chdir(args[0]) == -1)
-			return (put_error("cd: could not change directory", -1));
+			return (-1);
 	}
 	replace_env(ft_strfljoin("PWD=", getcwd(NULL, 0)));
 	return (0);

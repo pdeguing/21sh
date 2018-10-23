@@ -6,21 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:39:27 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 08:01:27 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 07:08:18 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static int		get_envlen(char **env)
-{
-	int		i;
-
-	i = 0;
-	while (env[i] != NULL)
-		i++;
-	return (i);
-}
 
 void	init_g_env(char **env)
 {

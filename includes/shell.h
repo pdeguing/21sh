@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:48:13 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 08:44:32 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 ** Typedefs
 */
 
-typedef struct s_tree		t_tree;
 typedef struct s_token		t_token;
 typedef enum e_type			t_type;
 
@@ -43,8 +42,8 @@ typedef enum e_type			t_type;
 
 # include "parsing.h"
 # include "debugging.h"
-# include "builtins.h"
 # include "execute.h"
+# include "builtins.h"
 
 /*
 ** Environment
@@ -54,6 +53,7 @@ char						**g_env;
 
 void						init_g_env(char **env);
 char						*get_varenv(char *varname);
+int							get_envlen(char **env);
 
 /*
 ** Utilities

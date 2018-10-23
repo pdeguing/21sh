@@ -6,11 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 12:23:27 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:50:07 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 07:52:18 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "shell.h"
 
 char	**get_path(void)
 {

@@ -6,11 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/28 16:10:43 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:47:05 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 08:00:40 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "shell.h"
 
 int		replace_env(char *arg)
 {

@@ -6,11 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 15:01:08 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/22 12:45:27 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 07:53:06 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "shell.h"
 
 int		ft_echo(char **args)
 {

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   get_envlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/25 15:03:33 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 07:53:15 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/09/26 11:14:34 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/23 07:54:01 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_env(char **args)
+int		get_envlen(char **env)
 {
 	int		i;
 
-	if (args[0])
-		ft_printf("");
 	i = 0;
-	while (g_env[i])
-	{
-		ft_printf("%s\n", g_env[i]);
+	while (env[i] != NULL)
 		i++;
-	}
-	return (0);
+	return (i);
 }
