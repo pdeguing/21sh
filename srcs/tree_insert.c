@@ -6,11 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 09:04:48 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/19 16:44:25 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 10:12:28 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "shell.h"
 
 static int	precedence_cmp(t_tree *node1, t_tree *node2)
 {

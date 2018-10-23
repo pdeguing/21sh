@@ -6,11 +6,31 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:27:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 07:52:30 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 10:22:12 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+char	*g_builtin_name[BUILTIN_NBR] =
+{
+	"echo",
+	"cd",
+	"env",
+	"setenv",
+	"unsetenv",
+	"exit",
+};
+
+int		(*g_builtin_func[BUILTIN_NBR])(char **) =
+{
+	&ft_echo,
+	&ft_cd,
+	&ft_env,
+	&ft_setenv,
+	&ft_unsetenv,
+	&ft_exit,
+};
 
 void		execute_cmd(char **args, char flag, int fd_read, int fd_write)
 {
