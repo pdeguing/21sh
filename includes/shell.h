@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 17:44:03 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/24 07:42:58 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int				replace_env(char *arg);
 
 /* Debugging **************************************************************** */
  
-# define STR_TEST			"mkdir test ; cd test ; ls -a ; ls | 'cat | wc' -c > fifi ; <& >& && >> << >>&<> cat fifi"
+# define STR_TEST			"mkdir test ; cd test ; ls -a ; ls | 'cat | wc' -c > fifi"
 # define STR_1				"ls libft"
 # define STR_2				"ls ; echo hello"
 # define STR_3				"cat -e; ls | cat -e > file; cat -e > file < input"

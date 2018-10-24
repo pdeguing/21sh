@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:42:57 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 07:52:44 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/24 09:57:15 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,10 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 		}
 		execute_tree(&head->left, flag, fd_read, fd);
 		close(fd);
+	}
+	else if (head->token->type == LESSAND)
+	{
+		p[0] = 
+		execute_tree(&head->left, flag | DUPLICATE, fd_read, fd_write);
 	}
 }

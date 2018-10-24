@@ -1,7 +1,6 @@
 #include "shell.h"
 
-
-void	redirect_io(int fd_read, int fd_write)
+void	io_redirect(int fd_read, int fd_write)
 {
 	if (fd_read != STDIN)
 	{
