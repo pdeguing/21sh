@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 10:22:10 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/23 17:44:03 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 typedef struct s_token		t_token;
 typedef enum e_type			t_type;
 typedef struct s_tree		t_tree;
+typedef struct s_dlist		t_dlist;
 
 /* Environment ************************************************************** */
 
@@ -161,5 +162,19 @@ t_tree						*tree_new(t_token *token);
 void						tree_insert(t_tree **root, t_tree *new);
 
 t_tree						*parse(char *input);
+
+/* History ****************************************************************** */
+
+struct						s_dlist
+{
+	char					*line;
+	t_dlist					*prev;
+	t_dlist					*next;
+};
+
+t_dlist						*history_new(void);
+
+void						history_add(char *line, t_dlist **history);
+void						history_print(t_dlist **history);
 
 #endif
