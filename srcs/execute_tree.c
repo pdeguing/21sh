@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:42:57 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/24 09:57:15 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/24 13:04:07 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char		**get_args(t_tree **root)
 ** a stack storing an array of 2 fd, read end write end.
 */
 
-void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
+void		execute_tree(t_tree **root, char flag, t_io **io_stack)
 {
 	t_tree	*head;
 	int		p[2];
@@ -71,12 +71,20 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 		return ;
 	// Execute cmd
 	if (!head->left)
-		execute_cmd(get_args(&head), flag, fd_read, fd_write);
+		execute_cmd(get_args(&head), flag, io_stack);
 	else if (head->token->type == SEMICOLON)
 	{
-		execute_tree(&head->left, flag, fd_read, fd_write);
-		execute_tree(&head->right, flag, fd_read, fd_write);
+		execute_tree(&head->left, flag, io_stack);
+		execute_tree(&head->right, flag, io_stack);
 	}
+	/*
+	** The first action in the stack will be put by a PIPELINE
+	** So we don't actually want to modify the stack of the pipe
+	** between branch, we send a copy. Nevermind it's recursive
+	** we don't never modify it for the upper level. So we just
+	** push in the stack at each level of recursion until
+	** execution.
+	*/
 	else if (head->token->type == PIPELINE)
 	{
 		if (pipe(p) == -1)
@@ -84,11 +92,15 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 			perror("21sh");
 			exit(EXIT_FAILURE);
 		}
-		execute_tree(&head->left, flag ^ WAIT, fd_read, p[WRITE]);
+		execute_tree(&head->left, flag ^ WAIT, &io_push(1, p[WRITE], io_stack));
 		close(p[WRITE]);
-		execute_tree(&head->right, flag, p[READ], fd_write);
+		execute_tree(&head->right, flag, &io_push(0, p[READ], io_stack));
 		close(p[READ]);
 	}
+	/*
+	** Simple redirections will push in front the action of replacing
+	** one fd with the one resulting of the open call
+	*/
 	else if (head->token->type == GREAT)
 	{
 		fd = open(head->right->token->literal, O_WRONLY | O_CREAT, 0644);
@@ -97,7 +109,7 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 			perror(head->right->token->literal);
 			exit(EXIT_FAILURE);
 		}
-		execute_tree(&head->left, flag, fd_read, fd);
+		execute_tree(&head->left, flag, &io_push(1, fd, io_stack));
 		close(fd);
 	}
 	else if (head->token->type == LESS)
@@ -108,7 +120,7 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 			perror(head->right->token->literal);
 			exit(EXIT_FAILURE);
 		}
-		execute_tree(&head->left, flag, fd, fd_write);
+		execute_tree(&head->left, flag, &io_push(0, fd, io_stack));
 		close(fd);
 	}
 	else if (head->token->type == DGREAT)
@@ -119,12 +131,21 @@ void		execute_tree(t_tree **root, char flag, int fd_read, int fd_write)
 			perror(head->right->token->literal);
 			exit(EXIT_FAILURE);
 		}
-		execute_tree(&head->left, flag, fd_read, fd);
+		execute_tree(&head->left, flag, &io_push(1, fd, io_stack));
 		close(fd);
 	}
-	else if (head->token->type == LESSAND)
+	/*
+	** And aggregation are just a redirection with a fd instead of a
+	** filename so it's the same
+	**
+	** This is out of the standard, but seems to be Bash behaviour.
+	** We are not checking for the specifing (input or ouput), opening
+	** of the fd.
+	*/
+	/*
+	else if (head->token->type == LESSAND || head->token->type == GREATAND)
 	{
-		p[0] = 
-		execute_tree(&head->left, flag | DUPLICATE, fd_read, fd_write);
+		execute_tree(&head->left, flag, &io_push(left, right, io_stack));
 	}
+	*/
 }

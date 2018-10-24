@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/24 07:42:58 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/24 13:04:09 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_token		t_token;
 typedef enum e_type			t_type;
 typedef struct s_tree		t_tree;
 typedef struct s_dlist		t_dlist;
+typedef struct s_io			t_io;
 
 /* Environment ************************************************************** */
 
@@ -90,11 +91,9 @@ void						tree_print(t_tree **root);
 # define WRITE			1
 # define WAIT			0x1
 
-void				redirect_io(int fd_read, int fd_write);
-
-void				execute_bin(char **args, char flag, int fd_read, int fd_write);
-void				execute_cmd(char **args, char flag, int fd_read, int fd_write);
-void				execute_tree(t_tree **root, char flag, int fd_read, int fd_write);
+void				execute_bin(char **args, char flag, t_io **io_stack);
+void				execute_cmd(char **args, char flag, t_io **io_stack);
+void				execute_tree(t_tree **root, char flag, t_io **io_stack);
 void				execute(t_tree **root);
 
 /* Parsing ****************************************************************** */
@@ -176,5 +175,18 @@ t_dlist						*history_new(void);
 
 void						history_add(char *line, t_dlist **history);
 void						history_print(t_dlist **history);
+
+/* I/O *********************************************************************** */
+
+struct						s_io
+{
+	int						dst;
+	int						src;
+	t_io					*next;
+};
+
+void						io_redirect(t_io **io_stack);
+
+t_io						*io_push(int dst, int src, t_io **io_stack);
 
 #endif

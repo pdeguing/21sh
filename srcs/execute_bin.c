@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 12:23:27 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/24 09:57:18 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/24 13:01:48 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		exec_allpath(char **args)
 	return (-1);
 }
 
-void		execute_bin(char **args, char flag, int fd_read, int fd_write)
+void		execute_bin(char **args, char flag, t_io **io_stack)
 {
 	pid_t		pid;
 
@@ -78,7 +78,7 @@ void		execute_bin(char **args, char flag, int fd_read, int fd_write)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
-		io_redirect(fd_read, fd_write);
+		io_redirect(io_stack);
 		if (exec_allpath(args) == -1)
 		{
 			perror(args[0]);
