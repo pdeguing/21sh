@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 09:04:48 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 10:12:28 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/25 10:32:09 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static int	precedence_cmp(t_tree *node1, t_tree *node2)
 
 	type1 = node1->token->type;
 	type2 = node2->token->type;
+	/*
+	ft_printf(RED"PRECEDENCE: "RESET"%d | vs | %d\n", type1, type2);
+	*/
 	if (LESS <= type1 && type1<= GREATAND)
 		type1 = LESS;
 	if (LESS <= type2 && type2 <= GREATAND)
@@ -33,7 +36,7 @@ void		tree_insert(t_tree **root, t_tree *new)
 	head = *root;
 	if (head == NULL)
 		*root = new;
-	else if (precedence_cmp(new, head) > 0)
+	else if (precedence_cmp(new, head) >= 0 && new->token->type != TOKEN)
 	{
 		*root = new;
 		new->left = head;

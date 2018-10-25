@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 10:16:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/24 12:45:38 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/25 10:32:27 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	io_redirect(t_io **io_stack)
 	head = *io_stack;
 	while (head)
 	{
-		if (dup2(head->dst, head->src) == -1)
+		/*
+		ft_printf(RED"||| dst: %d, src: %d\n"RESET, head->dst, head->src);
+		*/
+		if (dup2(head->src, head->dst) == -1)
 		{
 			perror("21sh");
 			exit(EXIT_FAILURE);

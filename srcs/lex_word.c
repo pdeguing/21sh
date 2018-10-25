@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:17:42 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 17:17:18 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/25 10:38:10 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		lex_get_operator(char **pstr, char *current_char, t_token *token)
 	else if (*current_char == '>')
 	{
 		current_char++;
-		if (*current_char == '<')
+		if (*current_char == '>')
 		{
 			token->type = DGREAT;
 			current_char++;

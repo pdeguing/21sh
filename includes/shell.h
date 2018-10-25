@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/24 13:04:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/25 10:35:51 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void						tree_print(t_tree **root);
 
 void				execute_bin(char **args, char flag, t_io **io_stack);
 void				execute_cmd(char **args, char flag, t_io **io_stack);
-void				execute_tree(t_tree **root, char flag, t_io **io_stack);
+void				execute_tree(t_tree **root, char flag, t_io *io_stack);
 void				execute(t_tree **root);
 
 /* Parsing ****************************************************************** */
@@ -125,14 +125,14 @@ static char						*g_strtype[TOTAL_TYPE] = {
 	[NEWLINE] = "newline",
 	[IO_NUMBER] = "io_number",
 	[TOKEN] = BLUE"token"RESET,
-	[SEMICOLON] = RED"semicolon"RESET,
-	[PIPELINE] = PINK"pipeline"RESET,
 	[LESS] = PINK"less"RESET,
 	[GREAT] = PINK"great"RESET,
 	[DLESS] = PINK"dless"RESET,
 	[DGREAT] = PINK"dgreat"RESET,
 	[LESSAND] = PINK"lessand"RESET,
 	[GREATAND] = PINK"greatand"RESET,
+	[PIPELINE] = PINK"pipeline"RESET,
+	[SEMICOLON] = RED"semicolon"RESET,
 	[WORD] = BLUE"word"RESET
 };
 
@@ -187,6 +187,6 @@ struct						s_io
 
 void						io_redirect(t_io **io_stack);
 
-t_io						*io_push(int dst, int src, t_io **io_stack);
+t_io						*io_push(int dst, int src, t_io *io_stack);
 
 #endif
