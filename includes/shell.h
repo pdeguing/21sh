@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 10:35:51 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/25 12:08:45 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void				execute(t_tree **root);
 # define B_SQUOTE			0x02 /* 0b000'0010 */
 # define B_DQUOTE			0x04 /* 0b000'0100 */
 
+# define IS_OP(type)		(LESS <= type && type <= GREATAND)
+
 enum						e_type
 {
 	DEFAULT,
@@ -143,12 +145,8 @@ struct						s_token
 };
 
 int							token_get(char **head, t_token *token);
-int							lex_get_word(char **pstr, char *current_char,
-		t_token *token);
-int							lex_get_nl(char **pstr, char *current_char,
-		t_token *token);
-int							lex_get_operator(char **pstr, char *current_char,
-		t_token *token);
+int							token_get_word(char **pstr, char *pchar, t_token *token);
+int							token_get_op(char **pstr, char *pchar, t_token *token);
 
 struct						s_tree
 {

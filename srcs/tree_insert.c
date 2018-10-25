@@ -6,27 +6,27 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 09:04:48 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 10:32:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/25 12:08:45 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	precedence_cmp(t_tree *node1, t_tree *node2)
+static int	precedence_cmp(t_tree *new, t_tree *head)
 {
-	int		type1;
-	int		type2;
+	int		tnew;
+	int		thead;
 
-	type1 = node1->token->type;
-	type2 = node2->token->type;
+	tnew = new->token->type;
+	thead = head->token->type;
 	/*
 	ft_printf(RED"PRECEDENCE: "RESET"%d | vs | %d\n", type1, type2);
 	*/
-	if (LESS <= type1 && type1<= GREATAND)
-		type1 = LESS;
-	if (LESS <= type2 && type2 <= GREATAND)
-		type2 = LESS;
-	return (type1 - type2);
+	if (IS_OP(tnew))
+		tnew = LESS;
+	if (IS_OP(thead))
+		thead = LESS;
+	return (tnew - thead);
 }
 
 void		tree_insert(t_tree **root, t_tree *new)
@@ -41,6 +41,8 @@ void		tree_insert(t_tree **root, t_tree *new)
 		*root = new;
 		new->left = head;
 	}
+	else if (IS_OP(head->token->type) && head->right)
+		tree_insert(&head->left, new);
 	else
 		tree_insert(&head->right, new);
 }
