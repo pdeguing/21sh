@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_get_word.c                                   :+:      :+:    :+:   */
+/*   token_get_io.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/25 11:25:11 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 14:34:37 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/25 14:23:05 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/25 14:37:24 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		token_get_word(char **pstr, char *pchar, t_token *token)
+int		token_get_io(char **pstr, char *pchar, t_token *token)
 {
-	unsigned char	quote_status;
-	char	*first_char;
+	char	*ref;
 	int		i;
 
-	quote_status = 0;
-	token->type = TOKEN;
-	first_char = pchar;
+	ref = pchar;
 	i = 0;
-	while (*pchar != '\0' && *pchar != '\n')
+	while (*pchar != '\0' && ft_isdigit(*pchar))
 	{
-		if (!quote_status && ft_strchr(";|<>", *pchar))
-			break ;
-		else if (!quote_status && ft_strchr(" 	", *pchar))
-			break ;
-		else if (*pchar == '\'')
-			quote_status ^= B_SQUOTE;
-		else if (*pchar == '\"')
-			quote_status ^= B_DQUOTE;
 		pchar++;
 		i++;
 	}
+	if (!ft_strchr("<>", *pchar))
+		return (0);
+	token->type = IO_NUMBER;
 	token->literal = ft_strnew(i);
-	ft_memcpy(token->literal, first_char, i);
+	ft_memcpy(token->literal, ref, i);
 	*pstr = pchar;
 	return (1);
 }

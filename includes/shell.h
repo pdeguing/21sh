@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 12:08:45 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/25 14:37:26 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,10 @@ struct						s_token
 	char					*literal;
 };
 
-int							token_get(char **head, t_token *token);
-int							token_get_word(char **pstr, char *pchar, t_token *token);
+int							token_get(char **pstr, t_token *token);
+int							token_get_io(char **pstr, char *pchar, t_token *token);
 int							token_get_op(char **pstr, char *pchar, t_token *token);
+int							token_get_word(char **pstr, char *pchar, t_token *token);
 
 struct						s_tree
 {
