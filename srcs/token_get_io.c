@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 14:23:05 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 14:37:24 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/26 11:31:42 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		token_get_io(char **pstr, char *pchar, t_token *token)
 		pchar++;
 		i++;
 	}
-	if (!ft_strchr("<>", *pchar))
+	if (!*pchar || !ft_strchr("<>", *pchar))
 		return (0);
 	token->type = IO_NUMBER;
 	token->literal = ft_strnew(i);

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 17:04:21 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 10:37:17 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/26 11:19:51 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void		catch_unexpected(t_token *prev, t_token *next)
 {
 	if (prev == NULL)
 		return ;
-	if (prev->type >= LESS && next->type >= LESS)
+	if (IS_OP(prev->type) && IS_OP(next->type))
 		exit(EXIT_FAILURE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 14:37:26 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/26 13:00:59 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,15 @@ void				execute(t_tree **root);
 # define B_DQUOTE			0x04 /* 0b000'0100 */
 
 # define IS_OP(type)		(LESS <= type && type <= GREATAND)
+# define IS_CTLOP(type)		(PIPELINE <= type && type <= SEMICOLON)
 
 enum						e_type
 {
 	DEFAULT,
 	NEWLINE,
-	IO_NUMBER,
 	TOKEN,
 	WORD,
+	IO_NUMBER,
 	LESS,
 	GREAT,
 	DLESS,

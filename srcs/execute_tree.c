@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:42:57 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 10:43:51 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/26 13:00:56 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,18 +146,22 @@ void		execute_tree(t_tree **root, char flag, t_io *io_stack)
 		execute_tree(&head->left, flag, io_push(1, fd, io_stack));
 		close(fd);
 	}
-	/*
-	** And aggregation are just a redirection with a fd instead of a
-	** filename so it's the same
-	**
-	** This is out of the standard, but seems to be Bash behaviour.
-	** We are not checking for the specifing (input or ouput), opening
-	** of the fd.
-	*/
-	/*
-	else if (head->token->type == LESSAND || head->token->type == GREATAND)
+	else if (head->token->type == IO_NUMBER)
 	{
-		execute_tree(&head->left, flag, &io_push(left, right, io_stack));
+		io_stack->dst = ft_atoi(head->token->literal);
+		execute_tree(&head->left, flag, io_stack);
+
 	}
-	*/
+	else if (head->token->type == GREATAND)
+	{
+		fd = ft_atoi(head->right->token->literal);
+		/* Check if open for output */
+		execute_tree(&head->left, flag, io_push(1, fd, io_stack));
+	}
+	else if (head->token->type == LESSAND)
+	{
+		fd = ft_atoi(head->right->token->literal);
+		/* Check if open for input */
+		execute_tree(&head->left, flag, io_push(0, fd, io_stack));
+	}
 }
