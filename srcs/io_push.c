@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 12:43:54 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/26 13:00:55 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/26 15:59:23 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,40 @@
 ** update the source instead of pushing a new action.
 */
 
-t_io	*io_push(int dst, int src, t_io *io_stack)
+t_io	*io_push(int dst, int src, t_io *io_stack, int op)
 {
 	t_io	*new;
 	t_io	*head;
 
 	head = io_stack;
-	/*
-	while (head)
+	if (op == GREATAND || op == LESSAND)
 	{
-		if (head->dst == dst)
+		while (head)
 		{
-			head->src = src;
-			return (io_stack);
+			if (src == head->dst)
+			{
+				src = head->src;
+			}
+			head = head->next;
 		}
-		head = head->next;
 	}
-	*/
-	new = (t_io *)malloc(sizeof(t_io));
-	if (!new)
-		return (NULL);
+	else
+	{
+		while (head)
+		{
+			if (head->op == PIPELINE && head->dst == dst)
+			{
+				head->src = src;
+				head->op = op;
+				return (io_stack);
+			}
+			head = head->next;
+		}
+	}
+	new = io_stack_new(dst, src, op);
 	if (io_stack)
 		new->next = io_stack;
 	else
 		new->next = NULL;
-	new->dst = dst;
-	new->src = src;
 	return (new);
 }

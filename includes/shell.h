@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/26 13:00:59 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/26 15:59:22 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,13 +180,16 @@ void						history_print(t_dlist **history);
 
 struct						s_io
 {
-	int						dst;
 	int						src;
+	int						dst;
+	int						op;
 	t_io					*next;
 };
 
 void						io_redirect(t_io **io_stack);
 
-t_io						*io_push(int dst, int src, t_io *io_stack);
+t_io						*io_push(int dst, int src, t_io *io_stack, int op);
+t_io						*io_stack_dup(t_io *io_stack);
+t_io						*io_stack_new(int dst, int src, int op);
 
 #endif
