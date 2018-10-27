@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:42:57 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/26 15:59:26 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/26 17:19:41 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,9 @@ void		execute_tree(t_tree **root, char flag, t_io *io_stack)
 	}
 	else if (head->token->type == GREATAND)
 	{
-		fd = ft_atoi(head->right->token->literal);
+		fd = '-';
+		if (ft_strcmp(head->right->token->literal, "-"))
+			fd = ft_atoi(head->right->token->literal);
 		/* Check if open for output */
 		execute_tree(&head->left, flag, io_push(1, fd, io_stack, GREATAND));
 	}
