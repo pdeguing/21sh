@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 10:16:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/26 17:19:43 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/27 06:57:44 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void	io_redirect(t_io **io_stack)
 				ref = ref->next;
 			}
 		}
+		/*
 		ft_printf(RED"||| dst: %d, src: %d\n"RESET, head->dst, head->src);
+		*/
 		if (dup2(head->src, head->dst) == -1)
 		{
 			perror("21sh");

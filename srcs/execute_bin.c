@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 12:23:27 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 09:38:46 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/27 07:00:25 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ void		execute_bin(char **args, char flag, t_io **io_stack)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
+		/*
 		ft_printf(RED"cmd: %s\n"RESET, args[0]);
+		*/
 		io_redirect(io_stack);
 		if (exec_allpath(args) == -1)
 		{

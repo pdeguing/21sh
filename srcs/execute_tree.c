@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 08:42:57 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/26 17:19:41 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/27 07:00:32 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void		execute_tree(t_tree **root, char flag, t_io *io_stack)
 	head = *root;
 	if (!head)
 		return ;
+	/*
 	ft_printf(RED"CURRENT: "RESET"%s\n", g_strtype[head->token->type]);
 	if (head->left)
 	{
@@ -81,7 +82,7 @@ void		execute_tree(t_tree **root, char flag, t_io *io_stack)
 		ft_printf(RED"right: "RESET);
 		ft_printf("%s > %s\n", g_strtype[head->right->token->type], head->right->token->literal);
 	}
-	// Execute cmd
+	*/
 	if (!head->left)
 		execute_cmd(get_args(&head), flag, &io_stack);
 	else if (head->token->type == SEMICOLON)
@@ -105,7 +106,9 @@ void		execute_tree(t_tree **root, char flag, t_io *io_stack)
 			exit(EXIT_FAILURE);
 		}
 		io_cpy = io_stack_dup(io_stack);
+		/*
 		ft_printf(RED"pipe[%d, %d]\n"RESET, p[READ], p[WRITE]);
+		*/
 		execute_tree(&head->left, flag ^ WAIT, io_push(1, p[WRITE], io_stack, PIPELINE));
 		close(p[WRITE]);
 		execute_tree(&head->right, flag, io_push(0, p[READ], io_cpy, PIPELINE));

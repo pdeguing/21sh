@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 10:38:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/27 12:46:05 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		gsh_loop(void)
 	{
 		put_prompt();
 		get_next_line(0, &line);
-//		get_command_line();
+		get_command_line();
 		history_add(line, &history);
 		ast = parse(line);
 //		tree_print(&ast);
