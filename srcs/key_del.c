@@ -1,45 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsh.c                                              :+:      :+:    :+:   */
+/*   key_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/30 16:44:45 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/30 16:22:53 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/30 17:11:25 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void		gsh_loop(void)
+void	key_backspace(t_shell *sh)
 {
-	char		*line;
-	t_tree		*ast;
-	t_dlist		*history;
-
-	signal(SIGINT, handle_sig);
-	history = NULL;
-	while (1)
+	if (!sol)
 	{
-		put_prompt();
-		get_command_line(sh);
-		get_next_line(0, &line);
-		history_add(line, &history);
-		ast = parse(line);
-//		tree_print(&ast);
-		execute(&ast);
+		tputs(move_left);
+		tputs(delete); //?
 	}
 }
 
-int		main(int ac, char **av, char **env)
+void	key_delete(t_shell *sh)
 {
-	t_shell		*sh;
+	if (!eol)
+		tputs(delete);
+}
 
-	(void)ac;
-	(void)av;
+void	key_del_beol(t_shell *sh)
+{
+	while (!sol)
+		backspace();
+}
 
-	sh = init_shell(env);
-	gsh_loop();
-	return (0);
+void	key_del_eol(t_shell *sh)
+{
+	while (!eol)
+		del();
 }

@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_gsh.c                                         :+:      :+:    :+:   */
+/*   key_clipboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:44:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/20 07:45:07 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/30 16:29:32 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/30 17:05:46 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		init_gsh(char **env)
+void	key_copy(t_shell *sh)
 {
-	init_g_env(env);
+	tputs(carriage_return);
+	while (!eol)
+		buffer = buffer + current;
+}
+
+void	key_paste(t_shell *sh)
+{
+	while (buffer)
+		print_char();
 }

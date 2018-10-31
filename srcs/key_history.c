@@ -1,45 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsh.c                                              :+:      :+:    :+:   */
+/*   key_history.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/30 16:44:45 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/30 16:17:20 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/30 17:12:40 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void		gsh_loop(void)
+void	key_history_up(t_shell *sh)
 {
-	char		*line;
-	t_tree		*ast;
-	t_dlist		*history;
-
-	signal(SIGINT, handle_sig);
-	history = NULL;
-	while (1)
+	if (history && head)
 	{
-		put_prompt();
-		get_command_line(sh);
-		get_next_line(0, &line);
-		history_add(line, &history);
-		ast = parse(line);
-//		tree_print(&ast);
-		execute(&ast);
+		clear_line();
+		print_cmd();
+		move_head_next();
 	}
 }
 
-int		main(int ac, char **av, char **env)
+void	key_history_down(t_shell *sh)
 {
-	t_shell		*sh;
+	if (head && head->prev)
+	{
+		move_head_prev();
+		clear_line();
+		print_cmd();
+	}
+}
 
-	(void)ac;
-	(void)av;
-
-	sh = init_shell(env);
-	gsh_loop();
-	return (0);
+void	key_history_search(t_shell *sh)
+{
+	clear_line();
+	read_char();
+	add_char_to_buf();
+	search_history(buf);
 }

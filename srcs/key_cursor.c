@@ -1,45 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsh.c                                              :+:      :+:    :+:   */
+/*   key_cursor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/30 16:44:45 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/30 16:24:39 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/30 17:07:36 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void		gsh_loop(void)
+void	key_cursor_left(t_shell *sh)
 {
-	char		*line;
-	t_tree		*ast;
-	t_dlist		*history;
-
-	signal(SIGINT, handle_sig);
-	history = NULL;
-	while (1)
-	{
-		put_prompt();
-		get_command_line(sh);
-		get_next_line(0, &line);
-		history_add(line, &history);
-		ast = parse(line);
-//		tree_print(&ast);
-		execute(&ast);
-	}
+	if (!sol)
+		tputs(move_left);
 }
 
-int		main(int ac, char **av, char **env)
+void	key_cursor_right(t_shell *sh)
 {
-	t_shell		*sh;
-
-	(void)ac;
-	(void)av;
-
-	sh = init_shell(env);
-	gsh_loop();
-	return (0);
+	if (!eol)
+		tputs(move_right);
 }
+

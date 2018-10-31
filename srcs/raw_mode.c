@@ -1,45 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsh.c                                              :+:      :+:    :+:   */
+/*   raw_mode.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/30 16:44:45 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/10/30 16:46:42 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/10/30 16:49:26 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void		gsh_loop(void)
+void	raw_mode_enable(void)
 {
-	char		*line;
-	t_tree		*ast;
-	t_dlist		*history;
+	t_termios	raw;
 
-	signal(SIGINT, handle_sig);
-	history = NULL;
-	while (1)
-	{
-		put_prompt();
-		get_command_line(sh);
-		get_next_line(0, &line);
-		history_add(line, &history);
-		ast = parse(line);
-//		tree_print(&ast);
-		execute(&ast);
-	}
+	tcgetattr(STDERR_FILENO, &raw);
+	raw.c_lflag &= ~(ECHO | ICANON);
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, &raw);
 }
 
-int		main(int ac, char **av, char **env)
+void	raw_mode_disable(void)
 {
-	t_shell		*sh;
+	t_termios	raw;
 
-	(void)ac;
-	(void)av;
-
-	sh = init_shell(env);
-	gsh_loop();
-	return (0);
+	tcgetattr(STDERR_FILENO, &raw);
+	raw.c_lflag |= (ECHO | ICANON);
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, &raw);
 }
