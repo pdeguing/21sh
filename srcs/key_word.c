@@ -6,12 +6,13 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 16:25:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/30 17:15:45 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/31 15:14:13 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+/*
 void	key_word_prev(t_shell *sh)
 {
 	while (!sol && !space)
@@ -25,3 +26,4 @@ void	key_word_next(t_shell *sh)
 		key_right_arrow(sh);
 	key_right_arrow(sh);
 }
+*/

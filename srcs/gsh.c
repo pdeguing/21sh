@@ -6,13 +6,13 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/30 16:44:45 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/31 15:26:18 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void		gsh_loop(void)
+static void		gsh_loop(t_shell *sh)
 {
 	char		*line;
 	t_tree		*ast;
@@ -40,6 +40,6 @@ int		main(int ac, char **av, char **env)
 	(void)av;
 
 	sh = init_shell(env);
-	gsh_loop();
+	gsh_loop(sh);
 	return (0);
 }

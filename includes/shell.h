@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/30 17:49:47 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/10/31 15:36:03 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <stdio.h>
 # include <fcntl.h>
+# include <termios.h>
+# include <termcap.h>
+# include <stdbool.h>
 # include "../libft/includes/libft.h"
 
 /* Colors ******************************************************************* */
@@ -28,12 +31,14 @@
 
 /* Typedefs ***************************************************************** */
 
+typedef struct s_shell		t_shell;
 typedef struct s_token		t_token;
 typedef enum e_type			t_type;
 typedef struct s_tree		t_tree;
 typedef struct s_dlist		t_dlist;
 typedef struct s_io			t_io;
 typedef struct s_keymap		t_keymap;
+typedef struct termios		t_termios;
 
 /* Environment ************************************************************** */
 
@@ -46,7 +51,7 @@ int							get_envlen(char **env);
 /* General ****************************************************************** */
 
 void						put_prompt(void);
-void						init_gsh(char **env);
+t_shell						*init_shell(char **env);
 
 /* Signals ****************************************************************** */
 
@@ -73,22 +78,6 @@ int							replace_env(char *arg);
 # define STR_1				"ls libft"
 # define STR_2				"ls ; echo hello"
 # define STR_3				"cat -e; ls | cat -e > file; cat -e > file < input"
-
-static char						*g_strtype[TOTAL_TYPE] = {
-	[DEFAULT] = "default",
-	[NEWLINE] = "newline",
-	[IO_NUMBER] = "io_number",
-	[TOKEN] = BLUE"token"RESET,
-	[LESS] = PINK"less"RESET,
-	[GREAT] = PINK"great"RESET,
-	[DLESS] = PINK"dless"RESET,
-	[DGREAT] = PINK"dgreat"RESET,
-	[LESSAND] = PINK"lessand"RESET,
-	[GREATAND] = PINK"greatand"RESET,
-	[PIPELINE] = PINK"pipeline"RESET,
-	[SEMICOLON] = RED"semicolon"RESET,
-	[WORD] = BLUE"word"RESET
-};
 
 void						tree_print(t_tree **root);
 
@@ -131,6 +120,22 @@ enum						e_type
 	PIPELINE,
 	SEMICOLON,
 	TOTAL_TYPE
+};
+
+static char						*g_strtype[TOTAL_TYPE] = {
+	[DEFAULT] = "default",
+	[NEWLINE] = "newline",
+	[IO_NUMBER] = "io_number",
+	[TOKEN] = BLUE"token"RESET,
+	[LESS] = PINK"less"RESET,
+	[GREAT] = PINK"great"RESET,
+	[DLESS] = PINK"dless"RESET,
+	[DGREAT] = PINK"dgreat"RESET,
+	[LESSAND] = PINK"lessand"RESET,
+	[GREATAND] = PINK"greatand"RESET,
+	[PIPELINE] = PINK"pipeline"RESET,
+	[SEMICOLON] = RED"semicolon"RESET,
+	[WORD] = BLUE"word"RESET
 };
 
 struct						s_token
@@ -188,30 +193,32 @@ t_io						*io_stack_new(int dst, int src, int op);
 
 /* Line Edition ************************************************************** */
 
-# define KEY_MAX			17
-
-// Need to specify int value of keys as index in enum
+struct						s_shell
+{
+	unsigned char			quote_status;
+};
 
 enum						e_keys
 {
-	 KEY_CURSOR_LEFT,
-	 KEY_CURSOR_RIGHT,
-	 KEY_DEL_BACKSPACE,
-	 KEY_DEL_DELETE,
+	 KEY_CURSOR_LEFT = 4479771,
+	 KEY_CURSOR_RIGHT = 4414235,
+	 KEY_DEL_BACKSPACE = 127,
+	 KEY_DEL_DELETE = 2117294875,
 	 KEY_DEL_BEG,
 	 KEY_DEL_END,
-	 KEY_HISTORY_UP,
-	 KEY_HISTORY_DOWN,
+	 KEY_HISTORY_UP = 4283163,
+	 KEY_HISTORY_DOWN = 4348699,
 	 KEY_HISTORY_SEARCH,
 	 KEY_LINE_UP,
 	 KEY_LINE_DOWN,
 	 KEY_LINE_BEG,
 	 KEY_LINE_END,
-	 KEY_NEWLINE,
+	 KEY_NEWLINE = 10,
 	 KEY_WORD_PREV,
 	 KEY_WORD_NEXT,
 	 KEY_COPY,
 	 KEY_PASTE,
+	 KEY_MAX = 1
 };
 
 struct						s_keymap
@@ -222,6 +229,7 @@ struct						s_keymap
 
 void						key_cursor_left(t_shell *sh);
 void						key_cursor_right(t_shell *sh);
+/*
 void						key_del_backspace(t_shell *sh);
 void						key_del_delete(t_shell *sh);
 void						key_del_beg(t_shell *sh);
@@ -237,5 +245,11 @@ void						key_word_prev(t_shell *sh);
 void						key_word_next(t_shell *sh);
 void						key_copy(t_shell *sh);
 void						key_paste(t_shell *sh);
+*/
+
+void						raw_mode_enable(void);
+void						raw_mode_disable(void);
+
+void						get_command_line(t_shell *sh);
 
 #endif
