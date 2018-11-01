@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/27 14:14:27 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/31 15:36:01 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/01 12:41:22 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	key_handle(t_shell *sh, int key)
 	if (ft_isascii(key))
 	{
 		ft_putchar(key);
-		key_cursor_right(sh);
 		return ;
 	}
 	i = 0;
@@ -57,24 +56,29 @@ void	key_handle(t_shell *sh, int key)
 	}
 }
 
-// Reading input as int does not work exactly as expected, we don't get ASCII
-// value of the key. So we need to read as char and treat control sequence
-// specifically, or map letter to their in value
-
 void	get_command_line(t_shell *sh)
 {
-	char		key;
+	int		key;
+	int		ret;
 
 	raw_mode_enable();
 	while (1)
 	{
-		read(0, &key, 4);
+		key = 0;
+		ret = read(0, &key, 4);
+		/*
+		ft_printf("ret = %d\n", ret);
 		ft_printf(RED"key pressed = %d\n"RESET, key);
+		*/
 		if (!sh->quote_status && key == '\n')
 			break ;
 		key_handle(sh, key);
 	}
 	raw_mode_disable();
 }
+
+/*
+** It seems we have to create the reading buffer ourselves and not use get_next_line
+*/
 
 // if we can get the input with get_next_line, we need to rename this function

@@ -6,11 +6,17 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/31 15:26:18 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/01 12:41:37 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+/*
+** Modify signal handling so that it restarts the loop instead of printing
+** the prompt, maybe just put the while loop of line edition as a temp
+** loop within gsh_loop
+*/
 
 static void		gsh_loop(t_shell *sh)
 {
