@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   rl_char.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/30 16:41:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/01 17:57:09 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/01 17:06:46 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/01 17:39:54 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		init_shell(char **env)
+void	rl_char_insert(t_rl *rl)
 {
-	char	*tname;
-	char	tbuf[1024];
+	char *tmp;
 
-	tname = getenv("TERM");
-	tgetent(tbuf, tname);
-	init_env(env);
+	tmp = rl->buf;
+	rl->len++;
+	rl->buf = ft_strnew(rl->len + 1);
+	if (tmp)
+	{
+		ft_strcpy(rl->buf, tmp);
+		ft_memmove(rl->buf + rl->cx + 1, rl->buf + rl->cx, rl->len - rl->cx);
+	}
+	rl->buf[rl->cx] = rl->key;
+	ft_strdel(&tmp);
+	// move_cursor_right();
 }

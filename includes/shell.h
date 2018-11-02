@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/31 15:36:03 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/01 18:02:13 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 
 /* Typedefs ***************************************************************** */
 
-typedef struct s_shell		t_shell;
 typedef struct s_token		t_token;
 typedef enum e_type			t_type;
 typedef struct s_tree		t_tree;
@@ -39,6 +38,7 @@ typedef struct s_dlist		t_dlist;
 typedef struct s_io			t_io;
 typedef struct s_keymap		t_keymap;
 typedef struct termios		t_termios;
+typedef struct s_rl			t_rl;
 
 /* Environment ************************************************************** */
 
@@ -51,7 +51,8 @@ int							get_envlen(char **env);
 /* General ****************************************************************** */
 
 void						put_prompt(void);
-t_shell						*init_shell(char **env);
+
+void						init_shell(char **env);
 
 /* Signals ****************************************************************** */
 
@@ -193,11 +194,6 @@ t_io						*io_stack_new(int dst, int src, int op);
 
 /* Line Edition ************************************************************** */
 
-struct						s_shell
-{
-	unsigned char			quote_status;
-};
-
 enum						e_keys
 {
 	 KEY_CURSOR_LEFT = 4479771,
@@ -224,11 +220,11 @@ enum						e_keys
 struct						s_keymap
 {
 	int						key;
-	void					(*f)(t_shell *);
+	void					(*f)(t_rl *);
 };
 
-void						key_cursor_left(t_shell *sh);
-void						key_cursor_right(t_shell *sh);
+void						key_cursor_left(t_rl *rl);
+void						key_cursor_right(t_rl *rl);
 /*
 void						key_del_backspace(t_shell *sh);
 void						key_del_delete(t_shell *sh);
@@ -247,9 +243,23 @@ void						key_copy(t_shell *sh);
 void						key_paste(t_shell *sh);
 */
 
+struct						s_rl
+{
+	int						key;
+	char					*buf;
+	int						len;
+	int						quote;
+	int						cx;
+	int						cy;
+	int						win_col;
+	int						win_row;
+};
+
 void						raw_mode_enable(void);
 void						raw_mode_disable(void);
 
-void						get_command_line(t_shell *sh);
+void						rl_char_insert(t_rl *rl);
+
+char						*rl_readline(void);
 
 #endif

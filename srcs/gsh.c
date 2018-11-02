@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/01 12:41:37 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/01 17:57:10 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** loop within gsh_loop
 */
 
-static void		gsh_loop(t_shell *sh)
+static void		gsh_loop(void)
 {
 	char		*line;
 	t_tree		*ast;
@@ -29,8 +29,7 @@ static void		gsh_loop(t_shell *sh)
 	while (1)
 	{
 		put_prompt();
-		get_command_line(sh);
-		get_next_line(0, &line);
+		line = rl_readline();
 		history_add(line, &history);
 		ast = parse(line);
 //		tree_print(&ast);
@@ -40,12 +39,10 @@ static void		gsh_loop(t_shell *sh)
 
 int		main(int ac, char **av, char **env)
 {
-	t_shell		*sh;
-
 	(void)ac;
 	(void)av;
 
-	sh = init_shell(env);
-	gsh_loop(sh);
+	init_shell(env);
+	gsh_loop();
 	return (0);
 }

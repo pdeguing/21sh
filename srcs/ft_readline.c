@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_command_line.c                                 :+:      :+:    :+:   */
+/*   ft_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/27 14:14:27 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/01 12:41:22 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/01 16:40:14 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/01 18:02:12 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,50 +35,66 @@ t_keymap g_keymap[KEY_MAX + 1] = {
 								*/
 };
 
-void	key_handle(t_shell *sh, int key)
+static t_rl	*rl_init(void)
+{
+	t_rl	*new;
+
+	new = (t_rl *)malloc(sizeof(t_rl));
+	if (!new)
+		return (NULL);
+	new->key = 0;
+	new->buf = NULL;
+	new->len = 0;
+	new->quote = 0;
+	new->cx = 0;
+	new->cy = 0;
+	new->win_col = 0;
+	new->win_row = 0;
+	return (new);
+}
+
+static int	control_handle(t_rl *rl)
 {
 	int		i;
 
-	if (ft_isascii(key))
-	{
-		ft_putchar(key);
-		return ;
-	}
 	i = 0;
 	while (i < KEY_MAX)
 	{
-		if (key == g_keymap[i].key)
+		if (rl->key == g_keymap[i].key)
 		{
-			g_keymap[i].f(sh);
+			g_keymap[i].f(rl);
 			break ;
 		}
 		i++;
 	}
+	return (0);
 }
 
-void	get_command_line(t_shell *sh)
+char	*rl_readline(void)
 {
-	int		key;
-	int		ret;
+	t_rl	*rl;
+	char	*line;
+	int		status;
 
+	rl = rl_init();
 	raw_mode_enable();
+	status = 0;
 	while (1)
 	{
-		key = 0;
-		ret = read(0, &key, 4);
-		/*
-		ft_printf("ret = %d\n", ret);
-		ft_printf(RED"key pressed = %d\n"RESET, key);
-		*/
-		if (!sh->quote_status && key == '\n')
+		ft_putstr(tgetstr("ce", NULL));
+		if (rl->buf)
+			ft_putstr(rl->buf);
+		rl->key = 0;
+		read(0, &rl->key, 4);
+		if (!rl->quote && rl->key == '\n')
 			break ;
-		key_handle(sh, key);
+		if (ft_isprint(rl->key))
+			rl_char_insert(rl); // or strjoin just need to check how to handle deletion
+		else
+			status = control_handle(rl);
 	}
 	raw_mode_disable();
+	line = rl->buf;
+	free(rl);
+	return (line);
 }
-
-/*
-** It seems we have to create the reading buffer ourselves and not use get_next_line
-*/
-
-// if we can get the input with get_next_line, we need to rename this function
