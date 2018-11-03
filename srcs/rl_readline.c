@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 16:40:14 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/01 18:02:12 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/03 10:51:14 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static t_rl	*rl_init(void)
 		return (NULL);
 	new->key = 0;
 	new->buf = NULL;
-	new->len = 0;
+	new->blen = 0;
+	new->plen = 0;
 	new->quote = 0;
 	new->cx = 0;
 	new->cy = 0;
@@ -79,8 +80,34 @@ char	*rl_readline(void)
 	rl = rl_init();
 	raw_mode_enable();
 	status = 0;
+	rl->plen = put_prompt();
 	while (1)
 	{
+		ft_putstr(tgetstr("cr", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgetstr("nd", NULL));
 		ft_putstr(tgetstr("ce", NULL));
 		if (rl->buf)
 			ft_putstr(rl->buf);

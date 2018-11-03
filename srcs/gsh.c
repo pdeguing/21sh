@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/01 17:57:10 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/03 10:30:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ static void		gsh_loop(void)
 	t_tree		*ast;
 	t_dlist		*history;
 
-	signal(SIGINT, handle_sig);
+//	signal(SIGINT, handle_sig);
 	history = NULL;
 	while (1)
 	{
-		put_prompt();
 		line = rl_readline();
 		history_add(line, &history);
 		ast = parse(line);

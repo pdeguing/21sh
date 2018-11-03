@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/01 18:02:13 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/03 10:37:09 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int							get_envlen(char **env);
 
 /* General ****************************************************************** */
 
-void						put_prompt(void);
+int							put_prompt(void);
 
 void						init_shell(char **env);
 
@@ -247,7 +247,8 @@ struct						s_rl
 {
 	int						key;
 	char					*buf;
-	int						len;
+	int						blen;
+	int						plen;
 	int						quote;
 	int						cx;
 	int						cy;
