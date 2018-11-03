@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 16:40:14 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/03 10:51:14 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/03 11:59:01 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,38 +83,18 @@ char	*rl_readline(void)
 	rl->plen = put_prompt();
 	while (1)
 	{
-		ft_putstr(tgetstr("cr", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
-		ft_putstr(tgetstr("nd", NULL));
+		ft_putstr(tgoto(tgetstr("ch", NULL), 0, rl->plen));
 		ft_putstr(tgetstr("ce", NULL));
 		if (rl->buf)
 			ft_putstr(rl->buf);
+		ft_putstr(tgoto(tgetstr("ch", NULL), 0, rl->plen + rl->cx));
 		rl->key = 0;
 		read(0, &rl->key, 4);
 		if (!rl->quote && rl->key == '\n')
+		{
+			ft_putstr("\n");
 			break ;
+		}
 		if (ft_isprint(rl->key))
 			rl_char_insert(rl); // or strjoin just need to check how to handle deletion
 		else
