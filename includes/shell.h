@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/03 11:58:59 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/03 18:33:20 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,8 @@ enum						e_keys
 	 KEY_CURSOR_RIGHT = 4414235,
 	 KEY_DEL_BACKSPACE = 127,
 	 KEY_DEL_DELETE = 2117294875,
-	 KEY_DEL_BEG,
-	 KEY_DEL_END,
+	 KEY_DEL_BEG = 21,
+	 KEY_DEL_END = 11,
 	 KEY_HISTORY_UP = 4283163,
 	 KEY_HISTORY_DOWN = 4348699,
 	 KEY_HISTORY_SEARCH,
@@ -214,7 +214,7 @@ enum						e_keys
 	 KEY_WORD_NEXT,
 	 KEY_COPY,
 	 KEY_PASTE,
-	 KEY_MAX = 1
+	 KEY_MAX = 8
 };
 
 struct						s_keymap
@@ -225,13 +225,13 @@ struct						s_keymap
 
 void						key_cursor_left(t_rl *rl);
 void						key_cursor_right(t_rl *rl);
+void						key_del_backspace(t_rl *rl);
+void						key_del_delete(t_rl *rl);
+void						key_del_beg(t_rl *rl);
+void						key_del_end(t_rl *rl);
+void						key_history_up(t_rl *rl);
+void						key_history_down(t_rl *rl);
 /*
-void						key_del_backspace(t_shell *sh);
-void						key_del_delete(t_shell *sh);
-void						key_del_beg(t_shell *sh);
-void						key_del_end(t_shell *sh);
-void						key_history_up(t_shell *sh);
-void						key_history_down(t_shell *sh);
 void						key_line_up(t_shell *sh);
 void						key_line_down(t_shell *sh);
 void						key_line_beg(t_shell *sh);
@@ -254,6 +254,7 @@ struct						s_rl
 	int						cy;
 	int						win_col;
 	int						win_row;
+	t_dlist					*history_head;
 };
 
 void						raw_mode_enable(void);
