@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 16:40:14 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/05 09:59:16 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/05 13:03:48 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ static t_rl	*rl_init(void)
 	if (!new)
 		return (NULL);
 	new->key = 0;
-	new->buf = NULL;
-	new->blen = 0;
-	new->plen = 0;
+	new->row = NULL;
+	new->row_max = 0;
+	rl_row_insert(rl, NULL);
+	new->prompt_size = 0;
 	new->quote = 0;
 	new->cx = 0;
 	new->cy = 0;
@@ -88,11 +89,10 @@ char	*rl_readline(void)
 	rl->plen = put_prompt();
 	while (1)
 	{
+		//rl_line_clear();
+		//rl_line_print();
 		ft_putstr(tgoto(tgetstr("ch", NULL), 0, rl->plen));
 		ft_putstr(tgetstr("ce", NULL));
-		if (rl->buf)
-			ft_putstr(rl->buf);
-		ft_putstr(tgoto(tgetstr("ch", NULL), 0, rl->plen + rl->cx));
 		rl->key = 0;
 		read(0, &rl->key, 4);
 		if (!rl->quote && rl->key == '\n')
@@ -100,6 +100,7 @@ char	*rl_readline(void)
 			ft_putstr("\n");
 			break ;
 		}
+		rl_char_quote(rl);
 		if (ft_isprint(rl->key))
 			rl_char_insert(rl); // or strjoin just need to check how to handle deletion
 		else

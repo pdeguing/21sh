@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/05 09:59:17 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/05 13:03:50 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_io			t_io;
 typedef struct s_keymap		t_keymap;
 typedef struct termios		t_termios;
 typedef struct s_rl			t_rl;
+typedef struct s_row		t_row;
 
 /* Environment ************************************************************** */
 
@@ -194,6 +195,18 @@ t_io						*io_stack_new(int dst, int src, int op);
 
 /* Line Edition ************************************************************** */
 
+# define IS_QUOTE(c)		ft_strchr("\\\'\"", c)
+
+# define Q_BSLASH			0b00000001
+# define Q_SQUOTE			0b00000010
+# define Q_DQUOTE			0b00000100
+
+struct						s_row
+{
+	int						buf_size;
+	char					*buf;
+};
+
 enum						e_keys
 {
 	 KEY_CURSOR_LEFT = 4479771,
@@ -246,9 +259,9 @@ void						key_word_next(t_shell *sh);
 struct						s_rl
 {
 	int						key;
-	char					*buf;
-	int						blen;
-	int						plen;
+	t_row					*row;
+	int						row_max;
+	int						prompt_size;
 	int						quote;
 	int						cx;
 	int						cy;
@@ -262,6 +275,11 @@ void						raw_mode_enable(void);
 void						raw_mode_disable(void);
 
 void						rl_char_insert(t_rl *rl);
+void						rl_char_quote(t_rl *rl);
+
+void						rl_row_insert(t_rl *rl, char *buf);
+
+void						rl_line_print(t_rl *rl);
 
 char						*rl_readline(void);
 
