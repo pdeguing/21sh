@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/03 18:33:20 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/05 09:59:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,9 +212,9 @@ enum						e_keys
 	 KEY_NEWLINE = 10,
 	 KEY_WORD_PREV,
 	 KEY_WORD_NEXT,
-	 KEY_COPY,
-	 KEY_PASTE,
-	 KEY_MAX = 8
+	 KEY_COPY = 16,
+	 KEY_PASTE = 12,
+	 KEY_MAX = 10 
 };
 
 struct						s_keymap
@@ -231,6 +231,8 @@ void						key_del_beg(t_rl *rl);
 void						key_del_end(t_rl *rl);
 void						key_history_up(t_rl *rl);
 void						key_history_down(t_rl *rl);
+void						key_copy(t_rl *rl);
+void						key_paste(t_rl *sh);
 /*
 void						key_line_up(t_shell *sh);
 void						key_line_down(t_shell *sh);
@@ -239,8 +241,6 @@ void						key_line_end(t_shell *sh);
 void						key_newline(t_shell *sh);
 void						key_word_prev(t_shell *sh);
 void						key_word_next(t_shell *sh);
-void						key_copy(t_shell *sh);
-void						key_paste(t_shell *sh);
 */
 
 struct						s_rl
@@ -255,6 +255,7 @@ struct						s_rl
 	int						win_col;
 	int						win_row;
 	t_dlist					*history_head;
+	int						history_state;
 };
 
 void						raw_mode_enable(void);

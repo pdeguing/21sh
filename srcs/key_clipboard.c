@@ -6,23 +6,24 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 16:29:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/31 15:15:53 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/05 09:59:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*
-void	key_copy(t_shell *sh)
+char						*g_clipboard = NULL;
+
+void	key_copy(t_rl *rl)
 {
-	tputs(carriage_return);
-	while (!eol)
-		buffer = buffer + current;
+	ft_strdel(&g_clipboard);
+	g_clipboard = ft_strdup(rl->buf);
 }
 
-void	key_paste(t_shell *sh)
+void	key_paste(t_rl *rl)
 {
-	while (buffer)
-		print_char();
+	ft_strdel(&rl->buf);
+	rl->buf = ft_strdup(g_clipboard);
+	rl->blen = ft_strlen(rl->buf);
+	rl->cx = rl->blen;
 }
-*/

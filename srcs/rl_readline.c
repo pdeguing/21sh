@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 16:40:14 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/03 18:33:19 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/05 09:59:16 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_DEL_BEG, &key_del_beg},
 								{KEY_DEL_END, &key_del_end},
 								{KEY_HISTORY_UP, &key_history_up},
-								{KEY_HISTORY_DOWN, &key_history_down}
+								{KEY_HISTORY_DOWN, &key_history_down},
+								{KEY_COPY, &key_copy},
+								{KEY_PASTE, &key_paste}
 								/*
 								{KEY_HISTORY_SEARCH, &key_history_search},
 								{KEY_LINE_UP, &key_line_up},
@@ -30,8 +32,6 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_NEWLINE, &key_newline},
 								{KEY_WORD_PREV, &key_word_prev},
 								{KEY_WORD_NEXT, &key_word_next},
-								{KEY_COPY, &key_copy},
-								{KEY_PASTE, &key_paste}
 								*/
 };
 
@@ -52,6 +52,7 @@ static t_rl	*rl_init(void)
 	new->win_col = 0;
 	new->win_row = 0;
 	new->history_head = NULL;
+	new->history_state = 0;
 	return (new);
 }
 

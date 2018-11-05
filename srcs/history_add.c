@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 17:18:45 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/03 18:07:53 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/05 09:41:31 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ void	history_add(char *line, t_dlist **history)
 		return ;
 	new->line = ft_strdup(line);
 	new->prev = NULL;
-	if (!(*history))
-		new->next = new;
-	else
+	new->next = NULL;
+	if (*history)
 	{
 		new->next = (*history);
 		(*history)->prev = new;
