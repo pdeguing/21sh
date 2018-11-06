@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 12:01:21 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/05 12:51:53 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 07:51:41 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static t_row	rl_row_new(char *buf)
 	t_row	new;
 
 	if (buf)
-		new->buf_size = ft_strlen(buf);
+		new.bsize = ft_strlen(buf);
 	else
-		new->buf_size = 0;
-	new->buf = buf;
+		new.bsize = 0;
+	new.buf = buf;
 	return (new);
 }
 
@@ -30,9 +30,8 @@ void	rl_row_insert(t_rl *rl, char *buf)
 	int		i;
 
 	tmp = rl->row;
-	rl->row_max++;
-	rl->row = (t_row *)malloc(sizeof(t_row) * rl->row_max);
-	if (rl->row)
+	rl->row = (t_row *)malloc(sizeof(t_row) * (rl->row_max + 1));
+	if (!rl->row)
 		exit(EXIT_FAILURE);
 	i = 0;
 	while (i < rl->row_max)
@@ -41,5 +40,6 @@ void	rl_row_insert(t_rl *rl, char *buf)
 		i++;
 	}
 	rl->row[i] = rl_row_new(buf);
+	rl->row_max++;
 	free(tmp);
 }

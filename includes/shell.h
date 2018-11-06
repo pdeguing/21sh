@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/05 13:03:50 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 07:02:55 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ t_io						*io_stack_new(int dst, int src, int op);
 
 struct						s_row
 {
-	int						buf_size;
+	int						bsize;
 	char					*buf;
 };
 

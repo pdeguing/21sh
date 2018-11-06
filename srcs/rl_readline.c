@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_readline.c                                      :+:      :+:    :+:   */
+/*   rl_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/01 16:40:14 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/05 13:03:48 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/06 07:51:40 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_rl	*rl_init(void)
 	new->key = 0;
 	new->row = NULL;
 	new->row_max = 0;
-	rl_row_insert(rl, NULL);
+	rl_row_insert(new, NULL);
 	new->prompt_size = 0;
 	new->quote = 0;
 	new->cx = 0;
@@ -86,13 +86,13 @@ char	*rl_readline(void)
 	rl->history_head = history;
 	raw_mode_enable();
 	status = 0;
-	rl->plen = put_prompt();
+	rl->prompt_size = put_prompt();
 	while (1)
 	{
 		//rl_line_clear();
-		//rl_line_print();
-		ft_putstr(tgoto(tgetstr("ch", NULL), 0, rl->plen));
+		ft_putstr(tgoto(tgetstr("ch", NULL), 0, rl->prompt_size));
 		ft_putstr(tgetstr("ce", NULL));
+		rl_line_print(rl);
 		rl->key = 0;
 		read(0, &rl->key, 4);
 		if (!rl->quote && rl->key == '\n')
@@ -107,7 +107,7 @@ char	*rl_readline(void)
 			status = control_handle(rl);
 	}
 	raw_mode_disable();
-	line = rl->buf;
+	line = rl->row[rl->cy].buf; // join all rows
 	free(rl);
 	history_add(line, &history);
 	return (line);

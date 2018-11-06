@@ -6,13 +6,13 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 12:19:48 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/05 12:52:22 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 06:50:09 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	rl_line_print(rl)
+void	rl_line_print(t_rl *rl)
 {
 	int		i;
 
