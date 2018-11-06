@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/06 08:38:06 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 15:05:19 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,8 +218,8 @@ enum						e_keys
 	 KEY_HISTORY_UP = 4283163,
 	 KEY_HISTORY_DOWN = 4348699,
 	 KEY_HISTORY_SEARCH,
-	 KEY_LINE_UP,
-	 KEY_LINE_DOWN,
+	 KEY_CURSOR_UP = 2117425947,
+	 KEY_CURSOR_DOWN = 2117491483,
 	 KEY_LINE_BEG,
 	 KEY_LINE_END,
 	 KEY_NEWLINE = 10,
@@ -227,7 +227,7 @@ enum						e_keys
 	 KEY_WORD_NEXT,
 	 KEY_COPY = 16,
 	 KEY_PASTE = 12,
-	 KEY_MAX = 11
+	 KEY_MAX = 13
 };
 
 struct						s_keymap
@@ -245,11 +245,11 @@ void						key_del_end(t_rl *rl);
 void						key_history_up(t_rl *rl);
 void						key_history_down(t_rl *rl);
 void						key_newline(t_rl *rl);
+void						key_cursor_up(t_rl *rl);
+void						key_cursor_down(t_rl *rl);
 void						key_copy(t_rl *rl);
 void						key_paste(t_rl *sh);
 /*
-void						key_line_up(t_shell *sh);
-void						key_line_down(t_shell *sh);
 void						key_line_beg(t_shell *sh);
 void						key_line_end(t_shell *sh);
 void						key_word_prev(t_shell *sh);
@@ -278,6 +278,7 @@ void						rl_char_insert(t_rl *rl);
 void						rl_char_quote(t_rl *rl);
 
 void						rl_row_insert(t_rl *rl, char *buf);
+char						*rl_row_join(t_rl *rl);
 
 void						rl_display_print(t_rl *rl);
 void						rl_display_clear(t_rl *rl);

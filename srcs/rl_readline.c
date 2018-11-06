@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/06 08:48:06 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 15:05:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_HISTORY_UP, &key_history_up},
 								{KEY_HISTORY_DOWN, &key_history_down},
 								{KEY_NEWLINE, &key_newline},
+								{KEY_CURSOR_UP, &key_cursor_up},
+								{KEY_CURSOR_DOWN, &key_cursor_down},
 								{KEY_COPY, &key_copy},
 								{KEY_PASTE, &key_paste}
 								/*
 								{KEY_HISTORY_SEARCH, &key_history_search},
-								{KEY_LINE_UP, &key_line_up},
-								{KEY_LINE_DOWN, &key_line_down},
 								{KEY_LINE_BEG, &key_line_beg},
 								{KEY_LINE_END, &key_line_end},
 								{KEY_WORD_PREV, &key_word_prev},
@@ -100,12 +100,12 @@ char	*rl_readline(void)
 		}
 		rl_char_quote(rl);
 		if (ft_isprint(rl->key))
-			rl_char_insert(rl); // or strjoin just need to check how to handle deletion
+			rl_char_insert(rl);
 		else
 			status = control_handle(rl);
 	}
 	raw_mode_disable();
-	line = rl->row[rl->cy].buf; // join all rows
+	line = rl_row_join(rl);
 	free(rl);
 	history_add(line, &history);
 	return (line);

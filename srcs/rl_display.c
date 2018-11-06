@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 08:28:44 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/06 08:48:05 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 13:51:03 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	rl_display_clear(t_rl *rl)
 		ft_putstr(tgoto(tgetstr("ch", NULL), 0, 2));
 	ft_putstr(tgetstr("ce", NULL));
 }
-
-// should print only the line we are editing
 
 void	rl_display_print(t_rl *rl)
 {

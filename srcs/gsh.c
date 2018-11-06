@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/05 07:42:02 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 15:03:07 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void		gsh_loop(void)
 	while (1)
 	{
 		line = rl_readline();
+		ft_putendl_fd("line ok", 2);
 		ast = parse(line);
 //		tree_print(&ast);
 		execute(&ast);
