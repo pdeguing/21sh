@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/06 07:02:55 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 08:38:06 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ enum						e_keys
 	 KEY_WORD_NEXT,
 	 KEY_COPY = 16,
 	 KEY_PASTE = 12,
-	 KEY_MAX = 10 
+	 KEY_MAX = 11
 };
 
 struct						s_keymap
@@ -244,6 +244,7 @@ void						key_del_beg(t_rl *rl);
 void						key_del_end(t_rl *rl);
 void						key_history_up(t_rl *rl);
 void						key_history_down(t_rl *rl);
+void						key_newline(t_rl *rl);
 void						key_copy(t_rl *rl);
 void						key_paste(t_rl *sh);
 /*
@@ -251,7 +252,6 @@ void						key_line_up(t_shell *sh);
 void						key_line_down(t_shell *sh);
 void						key_line_beg(t_shell *sh);
 void						key_line_end(t_shell *sh);
-void						key_newline(t_shell *sh);
 void						key_word_prev(t_shell *sh);
 void						key_word_next(t_shell *sh);
 */
@@ -279,7 +279,8 @@ void						rl_char_quote(t_rl *rl);
 
 void						rl_row_insert(t_rl *rl, char *buf);
 
-void						rl_line_print(t_rl *rl);
+void						rl_display_print(t_rl *rl);
+void						rl_display_clear(t_rl *rl);
 
 char						*rl_readline(void);
 

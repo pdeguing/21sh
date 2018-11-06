@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/06 07:51:40 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/06 08:48:06 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_DEL_END, &key_del_end},
 								{KEY_HISTORY_UP, &key_history_up},
 								{KEY_HISTORY_DOWN, &key_history_down},
+								{KEY_NEWLINE, &key_newline},
 								{KEY_COPY, &key_copy},
 								{KEY_PASTE, &key_paste}
 								/*
@@ -29,7 +30,6 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_LINE_DOWN, &key_line_down},
 								{KEY_LINE_BEG, &key_line_beg},
 								{KEY_LINE_END, &key_line_end},
-								{KEY_NEWLINE, &key_newline},
 								{KEY_WORD_PREV, &key_word_prev},
 								{KEY_WORD_NEXT, &key_word_next},
 								*/
@@ -89,10 +89,8 @@ char	*rl_readline(void)
 	rl->prompt_size = put_prompt();
 	while (1)
 	{
-		//rl_line_clear();
-		ft_putstr(tgoto(tgetstr("ch", NULL), 0, rl->prompt_size));
-		ft_putstr(tgetstr("ce", NULL));
-		rl_line_print(rl);
+		rl_display_clear(rl);
+		rl_display_print(rl);
 		rl->key = 0;
 		read(0, &rl->key, 4);
 		if (!rl->quote && rl->key == '\n')
