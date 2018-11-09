@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_line.c                                         :+:      :+:    :+:   */
+/*   key_cursor2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/30 16:26:39 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/06 14:05:25 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/08 16:07:04 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/08 16:09:26 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*
-void	key_line_beg(t_shell *sh)
+void	key_cursor_beg(t_rl *rl)
 {
-	tputs(carriage_return);
+	while (rl->cx)
+		key_cursor_left(rl);
 }
 
-void	key_line_end(t_shell *sh)
+void	key_cursor_end(t_rl *rl)
 {
-	while (!eol)
-		right_arrow();
+	while (rl->cx < rl->row[rl->cy].bsize)
+		key_cursor_right(rl);
 }
-*/
