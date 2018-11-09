@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/08 16:12:00 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/08 16:31:52 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_CURSOR_DOWN, &key_cursor_down},
 								{KEY_CURSOR_BEG, &key_cursor_beg},
 								{KEY_CURSOR_END, &key_cursor_end},
+								{KEY_CURSOR_PWORD, &key_cursor_pword},
+								{KEY_CURSOR_NWORD, &key_cursor_nword},
 								{KEY_COPY, &key_copy},
 								{KEY_PASTE, &key_paste}
 								/*
 								{KEY_HISTORY_SEARCH, &key_history_search},
-								{KEY_WORD_PREV, &key_word_prev},
-								{KEY_WORD_NEXT, &key_word_next},
 								*/
 };
 
