@@ -1,43 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsh.c                                              :+:      :+:    :+:   */
+/*   key_sig.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/13 15:04:40 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/13 14:01:05 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/13 14:10:46 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void		gsh_loop(void)
+void	key_sig_int(t_rl *rl)
 {
-	char		*line;
-	t_tree		*ast;
-
-	signal(SIGINT, handle_sig);
-	while (1)
-	{
-		line = rl_readline();
-		if (!line)
-			continue ;
-//		ft_printf(RED"> %s "RESET, line);
-		ast = parse(line);
-		if (!ast)
-			continue ;
-//		tree_print(&ast);
-		execute(&ast);
-	}
+	rl->status = 1;
 }
 
-int		main(int ac, char **av, char **env)
+void	key_sig_eof(t_rl *rl)
 {
-	(void)ac;
-	(void)av;
-
-	init_shell(env);
-	gsh_loop();
-	return (0);
+	if (rl->row_max == 0 || (rl->row_max == 1 && rl->row[1].bsize == 0))
+	{
+		raw_mode_disable();
+		exit(EXIT_SUCCESS); // clean exit
+	}
 }

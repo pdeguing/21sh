@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 17:04:21 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/26 11:19:51 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/13 15:04:35 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ t_tree	*parse(char *input)
 	prev = NULL;
 	while (token_get(&input, next = init_token()) == 1)
 	{
-		/*
-		ft_printf("TOKEN: %s > %s\n", g_strtype[next->type], next->literal);
-		*/
+//		ft_printf("TOKEN: %s > %s\n", g_strtype[next->type], next->literal);
 		catch_unexpected(prev, next);
 		tree_insert(&root, tree_new(next));
 		prev = next;

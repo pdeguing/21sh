@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:25:11 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 14:34:37 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/13 15:05:18 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 int		token_get_word(char **pstr, char *pchar, t_token *token)
 {
-	unsigned char	quote_status;
+	int		quote;
 	char	*first_char;
 	int		i;
 
-	quote_status = 0;
+	quote = 0;
 	token->type = TOKEN;
 	first_char = pchar;
 	i = 0;
-	while (*pchar != '\0' && *pchar != '\n')
+	while (*pchar != '\0')
 	{
-		if (!quote_status && ft_strchr(";|<>", *pchar))
+		if (!quote && ft_strchr(";|<>", *pchar))
 			break ;
-		else if (!quote_status && ft_strchr(" 	", *pchar))
+		else if (!quote && ft_strchr(" 	", *pchar))
 			break ;
 		else if (*pchar == '\'')
-			quote_status ^= B_SQUOTE;
+			quote ^= B_SQUOTE;
 		else if (*pchar == '\"')
-			quote_status ^= B_DQUOTE;
+			quote ^= B_DQUOTE;
 		pchar++;
 		i++;
 	}

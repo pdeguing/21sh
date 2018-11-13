@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/08 16:31:53 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/13 15:05:19 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,9 @@ enum						e_keys
 	 KEY_NEWLINE = 10,
 	 KEY_COPY = 16,
 	 KEY_PASTE = 12,
-	 KEY_MAX = 17
+	 KEY_SIG_INT = 3,
+	 KEY_SIG_EOF = 4,
+	 KEY_MAX = 19
 };
 
 struct						s_keymap
@@ -253,6 +255,8 @@ void						key_cursor_pword(t_rl *rl);
 void						key_cursor_nword(t_rl *rl);
 void						key_copy(t_rl *rl);
 void						key_paste(t_rl *sh);
+void						key_sig_int(t_rl *sh);
+void						key_sig_eof(t_rl *sh);
 
 struct						s_rl
 {
@@ -267,6 +271,7 @@ struct						s_rl
 	int						win_row;
 	t_dlist					*history_head;
 	int						history_state;
+	int						status;
 };
 
 void						raw_mode_enable(void);

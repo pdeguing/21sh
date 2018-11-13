@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/08 16:31:52 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/13 14:39:53 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_CURSOR_PWORD, &key_cursor_pword},
 								{KEY_CURSOR_NWORD, &key_cursor_nword},
 								{KEY_COPY, &key_copy},
-								{KEY_PASTE, &key_paste}
+								{KEY_PASTE, &key_paste},
+								{KEY_SIG_INT, &key_sig_int},
+								{KEY_SIG_EOF, &key_sig_eof}
 								/*
 								{KEY_HISTORY_SEARCH, &key_history_search},
 								*/
@@ -54,6 +56,7 @@ static t_rl	*rl_init(void)
 	new->win_row = 0;
 	new->history_head = NULL;
 	new->history_state = 0;
+	new->status = 0;
 	return (new);
 }
 
@@ -79,15 +82,13 @@ char	*rl_readline(void)
 {
 	t_rl	*rl;
 	char	*line;
-	int		status;
 	static t_dlist	*history = NULL;
 
 	rl = rl_init();
 	rl->history_head = history;
 	raw_mode_enable();
-	status = 0;
 	rl->prompt_size = put_prompt();
-	while (1)
+	while (!rl->status)
 	{
 		rl_display_clear(rl);
 		rl_display_print(rl);
@@ -102,7 +103,7 @@ char	*rl_readline(void)
 		if (ft_isprint(rl->key))
 			rl_char_insert(rl);
 		else
-			status = control_handle(rl);
+			control_handle(rl);
 	}
 	raw_mode_disable();
 	line = rl_row_join(rl);
