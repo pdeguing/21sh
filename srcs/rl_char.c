@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 17:06:46 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 12:29:44 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/14 14:43:47 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	rl_char_insert(t_rl *rl)
 	key_cursor_right(rl);
 }
 
+// to remove
 void	rl_char_quote(t_rl *rl)
 {
 	ft_printf(BLUE"key = %d / quote = %d\n"RESET, rl->key, rl->quote);

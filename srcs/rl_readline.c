@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 12:29:46 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/14 14:43:49 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,11 @@ char	*rl_readline(void)
 		rl_display_print(rl);
 		rl->key = 0;
 		read(0, &rl->key, 4);
-		if (!rl->quote && rl->key == '\n')
+		if (rl->key == '\n' && rl_quote(rl))
 		{
 			ft_putstr("\n");
 			break ;
 		}
-		rl_char_quote(rl); // replace this by a brackets checking in previous condition
-		// each time there is a newline, we check to see if expression is correct
-		// if it is we break, else not
 		if (ft_isprint(rl->key))
 			rl_char_insert(rl);
 		else

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/13 15:05:19 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/14 14:41:56 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ struct						s_rl
 	t_row					*row;
 	int						row_max;
 	int						prompt_size;
-	int						quote;
+	int						quote; /* might be removable */
 	int						cx;
 	int						cy;
 	int						win_col;
@@ -276,6 +276,8 @@ struct						s_rl
 
 void						raw_mode_enable(void);
 void						raw_mode_disable(void);
+
+int							rl_quote(t_rl *rl);
 
 void						rl_char_insert(t_rl *rl);
 void						rl_char_quote(t_rl *rl);
