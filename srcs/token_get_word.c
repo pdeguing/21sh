@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:25:11 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/13 17:10:42 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/14 12:29:45 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int		token_get_word(char **pstr, char *pchar, t_token *token)
 			break ;
 		else if (!quote && ft_strchr(" 	", *pchar))
 			break ;
-		else if (*pchar == '\\')
+		else if ((!quote || ((quote & Q_DQUOTE) && !ft_strchr("$`\"\\\n", *pchar + 1))) && *pchar == '\\')
 			quote ^= Q_BSLASH;
-		else if (*pchar == '\'')
+		else if ((!quote || (quote & Q_SQUOTE)) && *pchar == '\'')
 			quote ^= Q_SQUOTE;
-		else if (*pchar == '\"')
+		else if ((!quote || (quote & Q_DQUOTE)) && *pchar == '\"')
 			quote ^= Q_DQUOTE;
 		else if (!(quote & Q_BSLASH) || *pchar != '\n')
 		{

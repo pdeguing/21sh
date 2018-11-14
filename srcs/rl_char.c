@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 17:06:46 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/13 17:10:43 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/14 12:29:44 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ void	rl_char_insert(t_rl *rl)
 
 void	rl_char_quote(t_rl *rl)
 {
-	if (rl->key == '\\')
+	ft_printf(BLUE"key = %d / quote = %d\n"RESET, rl->key, rl->quote);
+	if (rl->key == '\\' && !(rl->quote & Q_SQUOTE))
 		rl->quote ^= Q_BSLASH;
-	else if (!(rl->quote & Q_BSLASH) && rl->key == '\'')
+	else if ((!rl->quote || (rl->quote & Q_SQUOTE)) && rl->key == '\'')
 		rl->quote ^= Q_SQUOTE;
-	else if (!(rl->quote & Q_BSLASH) && rl->key == '\"')
+	else if ((!rl->quote || rl->quote == Q_DQUOTE) && rl->key == '\"')
 		rl->quote ^= Q_DQUOTE;
 	else
 		rl->quote &= ~(Q_BSLASH);
