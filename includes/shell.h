@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 16:16:26 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/15 09:17:42 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,6 @@ int							ft_exit(char **args);
 
 int							replace_env(char *arg);
 
-
-/* Debugging **************************************************************** */
- 
-# define STR_TEST			"mkdir test ; cd test ; ls -a ; ls | 'cat | wc' -c > fifi"
-# define STR_1				"ls libft"
-# define STR_2				"ls ; echo hello"
-# define STR_3				"cat -e; ls | cat -e > file; cat -e > file < input"
-
-void						tree_print(t_tree **root);
-
-/* Execute ****************************************************************** */
-
-# define NO_PIPE		-1
-# define STDIN			0
-# define STDOUT			1
-# define READ			0
-# define WRITE			1
-# define WAIT			0x1
-
-void				execute_bin(char **args, char flag, t_io **io_stack);
-void				execute_cmd(char **args, char flag, t_io **io_stack);
-void				execute_tree(t_tree **root, char flag, t_io *io_stack);
-void				execute(t_tree **root);
-
 /* Parsing ****************************************************************** */
 
 # define B_BSLASH			0x01 /* 0b0000'0001 */
@@ -124,22 +100,6 @@ enum						e_type
 	TOTAL_TYPE
 };
 
-static char						*g_strtype[TOTAL_TYPE] = {
-	[DEFAULT] = "default",
-	[NEWLINE] = "newline",
-	[IO_NUMBER] = "io_number",
-	[TOKEN] = BLUE"token"RESET,
-	[LESS] = PINK"less"RESET,
-	[GREAT] = PINK"great"RESET,
-	[DLESS] = PINK"dless"RESET,
-	[DGREAT] = PINK"dgreat"RESET,
-	[LESSAND] = PINK"lessand"RESET,
-	[GREATAND] = PINK"greatand"RESET,
-	[PIPELINE] = PINK"pipeline"RESET,
-	[SEMICOLON] = RED"semicolon"RESET,
-	[WORD] = BLUE"word"RESET
-};
-
 struct						s_token
 {
 	int						type;
@@ -162,6 +122,30 @@ t_tree						*tree_new(t_token *token);
 void						tree_insert(t_tree **root, t_tree *new);
 
 t_tree						*parse(char *input);
+
+/* Execute ****************************************************************** */
+
+# define NO_PIPE		-1
+# define STDIN			0
+# define STDOUT			1
+# define READ			0
+# define WRITE			1
+# define WAIT			0x1
+
+void				exe_op_io(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_less(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_great(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_dless(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_dgreat(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_lessand(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_greatand(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_pipe(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_semicolon(t_tree **root, char flag, t_io *io_stack);
+
+void				execute_bin(char **args, char flag, t_io **io_stack);
+void				execute_cmd(char **args, char flag, t_io **io_stack);
+void				execute_tree(t_tree **root, char flag, t_io *io_stack);
+void				execute(t_tree **root);
 
 /* History ****************************************************************** */
 
@@ -290,5 +274,14 @@ void						rl_display_print(t_rl *rl);
 void						rl_display_clear(t_rl *rl);
 
 char						*rl_readline(void);
+
+/* Debugging **************************************************************** */
+ 
+# define STR_TEST			"mkdir test ; cd test ; ls -a ; ls | 'cat | wc' -c > fifi"
+# define STR_1				"ls libft"
+# define STR_2				"ls ; echo hello"
+# define STR_3				"cat -e; ls | cat -e > file; cat -e > file < input"
+
+void						tree_print(t_tree **root);
 
 #endif
