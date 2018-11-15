@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 09:17:42 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/15 10:06:32 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void						init_shell(char **env);
 
 void						handle_sig(int sig);
 void						handle_childsig(int sig);
+void						handle_sig_zom(int sig);
 
 /* Builtins ***************************************************************** */
 

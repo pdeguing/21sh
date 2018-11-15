@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 12:07:11 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/15 10:51:42 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		gsh_loop(void)
 		line = rl_readline();
 		if (!line)
 			continue ;
-		ft_printf(RED"> %s "RESET, line);
+//		ft_printf(RED"> %s "RESET, line);
 		ast = parse(line);
 		if (!ast)
 			continue ;
