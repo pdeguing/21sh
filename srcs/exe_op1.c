@@ -6,17 +6,47 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 09:48:12 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 09:49:20 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/15 12:45:54 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+/*
+** Ok so Here Doc is working, we just need to precise the way we get the input 
+** with readline. Maybe we should use get_next_line instead. We need to 
+** keep the newlines in the final string and should not append the limiter
+** to it
+*/
+
 void	exe_op_dless(t_tree **root, char flag, t_io *io_stack)
 {
-	(void)root;
-	(void)flag;
-	(void)io_stack;
+	char	*heredoc;
+	t_tree	*head;
+	int		offset;
+	int		p[2];
+
+	head = *root;
+	offset = 0;
+	heredoc = NULL;
+	if (pipe(p) == -1)
+	{
+		perror("21sh");
+		exit(EXIT_FAILURE);
+	}
+	while (!heredoc || ft_strcmp(head->right->token->literal, heredoc + offset))
+	{
+		if (heredoc)
+			offset = ft_strlen(heredoc);
+		if (!heredoc)
+			heredoc = rl_readline();
+		else
+			heredoc = ft_strffjoin(heredoc, rl_readline());
+	}
+	ft_putstr_fd(heredoc, p[WRITE]);
+	close(p[WRITE]);
+	execute_tree(&head->left, flag, io_push(0, p[READ], io_stack, PIPELINE));
+	close(p[READ]);
 }
 
 void	exe_op_dgreat(t_tree **root, char flag, t_io *io_stack)
