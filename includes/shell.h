@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 14:41:56 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/14 16:16:26 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,7 @@ void						raw_mode_enable(void);
 void						raw_mode_disable(void);
 
 int							rl_quote(t_rl *rl);
+char						*rl_expansion(char *str);
 
 void						rl_char_insert(t_rl *rl);
 void						rl_char_quote(t_rl *rl);

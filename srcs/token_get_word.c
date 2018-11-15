@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:25:11 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 12:29:45 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/14 16:45:37 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,13 @@ static char	*append_char(char *str, char c)
 ** it
 */
 
-/* Bash ignores nested quotes */
+// consolid quotes conditioning based on rl_quote
 
 int		token_get_word(char **pstr, char *pchar, t_token *token)
 {
 	int		quote;
-	char	*first_char;
 
 	quote = 0;
-	first_char = pchar;
 	token->type = TOKEN;
 	while (*pchar != '\0')
 	{
@@ -61,12 +59,11 @@ int		token_get_word(char **pstr, char *pchar, t_token *token)
 			quote ^= Q_SQUOTE;
 		else if ((!quote || (quote & Q_DQUOTE)) && *pchar == '\"')
 			quote ^= Q_DQUOTE;
-		else if (!(quote & Q_BSLASH) || *pchar != '\n')
-		{
+		if (!(quote & Q_BSLASH) || *pchar != '\n')
 			token->literal = append_char(token->literal, *pchar);
-		}
 		pchar++;
 	}
+	token->literal = rl_expansion(token->literal); 
 	*pstr = pchar;
 	return (1);
 }
