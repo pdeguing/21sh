@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/16 12:11:39 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/16 12:41:55 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*rl_readline(const char *prompt, int psize, int mode)
 		rl_display_print(rl);
 		rl->key = 0;
 		read(0, &rl->key, 4);
-		if (rl->key == '\n' && ((mode & NO_QUOTE) || rl_quote(rl)))
+		if (rl->key == '\n' && ((mode & NO_QUOTE) || !rl_quote(rl)))
 		{
 			ft_putstr("\n");
 			break ;
