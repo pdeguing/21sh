@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 10:51:42 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/16 12:08:41 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 static void		gsh_loop(void)
 {
 	char		*line;
+	char		*prompt;
+	int			psize;
 	t_tree		*ast;
 
 	signal(SIGINT, handle_sig);
 	while (1)
 	{
-		line = rl_readline();
+		psize = sh_prompt_get(&prompt);
+		line = rl_readline(prompt, psize, DEFAULT);
 		if (!line)
 			continue ;
 //		ft_printf(RED"> %s "RESET, line);

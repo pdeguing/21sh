@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 12:13:39 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 10:49:38 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/16 11:11:14 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	handle_sig(int sig)
 	if (sig == SIGINT)
 	{
 		ft_printf("\n");
-		put_prompt();
 		signal(SIGINT, handle_sig);
 	}
 }

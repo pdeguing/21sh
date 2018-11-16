@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_prompt.c                                       :+:      :+:    :+:   */
+/*   sh_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 06:31:23 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/16 10:08:19 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/16 10:08:30 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/16 11:12:35 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	put_prompt(void)
+int		sh_prompt_get(char **ref)
 {
 	char	*pwd;
 	char	*home;
-	int		len;
+	char	*prompt;
+	int		psize;
 
-	len = ft_printf(BLACK "21sh: " RESET);
-	len -= (ft_strlen(BLACK) + ft_strlen(RESET));
+	psize = 0;
+	prompt = ft_strdup(BLACK"21sh: "RESET);
+	psize -= ft_strlen(BLACK) + ft_strlen(RESET);
 	if ((pwd = get_varenv("PWD")) != NULL)
 	{
 		if ((home = get_varenv("HOME")) && ft_strstr(pwd, home))
-			len += ft_printf("~%s ", pwd + ft_strlen(home));
+			prompt = ft_strffjoin(ft_strffjoin(prompt, "~"), pwd + ft_strlen(home));
 		else
-			len += ft_printf("%s ", pwd);
+			prompt = ft_strffjoin(prompt, pwd);
 	}
-	len += ft_printf(BLACK ">>> " RESET);
-	len -= (ft_strlen(BLACK) + ft_strlen(RESET));
-	return (len);
+	prompt = ft_strffjoin(prompt, BLACK" >>> "RESET);
+	psize -= ft_strlen(BLACK) + ft_strlen(RESET);
+	psize += ft_strlen(prompt);
+	*ref = prompt;
+	return (psize);
 }

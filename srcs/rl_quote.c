@@ -6,11 +6,30 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 14:39:01 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/16 08:53:43 by rsathiad         ###   ########.fr       */
+/*   Updated: 2018/11/16 09:17:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+/*
+INCORRECT:
+
+-> "ls'"
+-> 'ls"'
+-> 'ls\'
+
+Basically nothing is correct, you are just setting a bit when you read
+a character, the point of this function is to tell if the next character is quoted.
+And to this properly you need specific conditions for different kinds of quotes
+as it is written on the POSIX page...
+
+-> if BSLASH, the next character will be quoted
+-> if SQUOTE, then all other quote characters are ignored
+-> if DQUOTE, then all are ignored but BSLASH if it is followed by DQUOTE/BSLASH/NEWLINE
+*/
+
+// Use the existing masks //////////
 
 #define IS_SINGLE_QUOTE(x) x == 39
 #define IS_DOUBLE_QUOTE(x) x == 34
@@ -25,6 +44,8 @@
 ** Returns 1 if all quotes are closed (the next newline will not be quoted).
 ** 0 otherwise.
 */
+
+/* TRASH? //////////
 static unsigned char	ft_clearbit(char name, int position)
 {
 	unsigned int	mask;
@@ -44,6 +65,7 @@ static unsigned char	ft_setbit(char name, int position)
 	ret = (mask | name);
 	return (ret);
 }
+*/
 
 static unsigned char	ft_togglebit(char name, int position)
 {

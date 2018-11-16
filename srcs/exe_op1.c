@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 09:48:12 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 12:45:54 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/16 12:11:40 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,31 @@
 
 void	exe_op_dless(t_tree **root, char flag, t_io *io_stack)
 {
+	char	*line;
 	char	*heredoc;
 	t_tree	*head;
-	int		offset;
 	int		p[2];
 
 	head = *root;
-	offset = 0;
-	heredoc = NULL;
+	heredoc = ft_strnew(0);
+	line = ft_strnew(0);
 	if (pipe(p) == -1)
 	{
 		perror("21sh");
 		exit(EXIT_FAILURE);
 	}
-	while (!heredoc || ft_strcmp(head->right->token->literal, heredoc + offset))
+	while (1)
 	{
-		if (heredoc)
-			offset = ft_strlen(heredoc);
-		if (!heredoc)
-			heredoc = rl_readline();
-		else
-			heredoc = ft_strffjoin(heredoc, rl_readline());
+		ft_strdel(&line);
+		line = rl_readline("> ", 2, NO_QUOTE);
+		if (!line)
+			line = ft_strnew(0);
+		if (!ft_strcmp(head->right->token->literal, line))
+			break ;
+		line = ft_strffjoin(line, "\n");
+		heredoc = ft_strffjoin(heredoc, line);
 	}
+	ft_strdel(&line);
 	ft_putstr_fd(heredoc, p[WRITE]);
 	close(p[WRITE]);
 	execute_tree(&head->left, flag, io_push(0, p[READ], io_stack, PIPELINE));

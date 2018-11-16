@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 10:06:32 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/16 12:09:18 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int							get_envlen(char **env);
 
 /* General ****************************************************************** */
 
-int							put_prompt(void);
+int							sh_prompt_get(char **ref);
 
 void						init_shell(char **env);
 
@@ -178,7 +178,12 @@ t_io						*io_push(int dst, int src, t_io *io_stack, int op);
 t_io						*io_stack_dup(t_io *io_stack);
 t_io						*io_stack_new(int dst, int src, int op);
 
-/* Line Edition ************************************************************** */
+/* Readline ****************************************************************** */
+
+/* Execution modes */
+
+# define DEFAULT			0x0
+# define NO_QUOTE			0b0000001
 
 # define IS_QUOTE(c)		ft_strchr("\\\'\"", c)
 
@@ -274,7 +279,7 @@ char						*rl_row_join(t_rl *rl);
 void						rl_display_print(t_rl *rl);
 void						rl_display_clear(t_rl *rl);
 
-char						*rl_readline(void);
+char						*rl_readline(const char *prompt, int psize, int mode);
 
 /* Debugging **************************************************************** */
  

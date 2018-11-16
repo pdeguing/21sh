@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 17:38:22 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 12:00:55 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/16 12:11:03 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void	key_newline(t_rl *rl)
 	rl->cy++;
 	ft_putstr(tgetstr("do", NULL));
 	ft_putstr(tgetstr("cr", NULL));
-	ft_putstr(WHITE"> "RESET);
+	ft_putstr("> ");
 }

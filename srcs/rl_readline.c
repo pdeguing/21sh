@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 16:45:36 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/16 12:11:39 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	control_handle(t_rl *rl)
 	return (0);
 }
 
-char	*rl_readline(void)
+char	*rl_readline(const char *prompt, int psize, int mode)
 {
 	t_rl	*rl;
 	char	*line;
@@ -87,14 +87,16 @@ char	*rl_readline(void)
 	rl = rl_init();
 	rl->history_head = history;
 	raw_mode_enable();
-	rl->prompt_size = put_prompt();
+	rl->prompt_size = psize;
+	if (prompt)
+		ft_printf(prompt);
 	while (!rl->status)
 	{
 		rl_display_clear(rl);
 		rl_display_print(rl);
 		rl->key = 0;
 		read(0, &rl->key, 4);
-		if (rl->key == '\n' && rl_quote(rl))
+		if (rl->key == '\n' && ((mode & NO_QUOTE) || rl_quote(rl)))
 		{
 			ft_putstr("\n");
 			break ;
