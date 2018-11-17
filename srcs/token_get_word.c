@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:25:11 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 10:30:55 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/17 12:27:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,42 @@ static char	*append_char(char *str, char c)
 
 }
 
-/*
-** Added append_char(), just need to manage quotes now, they will always be
-** correct based on readline, so we just need to remove the quotes character
-** and keep track of the state to know if we append newline or just skip
-** it
-*/
+static int		squote(int quote, t_token *token)
+{
+	if (!(quote & (Q_BSLASH | Q_DQUOTE)))
+		quote ^= Q_SQUOTE;
+	else
+		token->literal = append_char(token->literal, '\'');
+	quote &= ~Q_BSLASH;
+	return (quote);
+}
 
-// consolid quotes conditioning based on rl_quote
+static int		dquote(int quote, t_token *token)
+{
+	if (!(quote & (Q_BSLASH | Q_SQUOTE)))
+		quote ^= Q_DQUOTE;
+	else
+		token->literal = append_char(token->literal, '\"');
+	quote &= ~Q_BSLASH;
+	return (quote);
+}
+
+static int		bslash(int quote, char *pchar, t_token *token)
+{
+	if ((!(quote & (Q_BSLASH | Q_SQUOTE)) || ((quote & Q_DQUOTE) && ft_strchr("\\\"\n", *pchar + 1))))
+		quote |= Q_BSLASH;
+	else
+	{
+		quote &= ~Q_BSLASH;
+		token->literal = append_char(token->literal, *pchar);
+	}
+	return (quote);
+}
+
+/*
+** The management of quotes is disgusting but I can't find a way to make it
+** better quickly, bad is better than nothing.
+*/
 
 int		token_get_word(char **pstr, char *pchar, t_token *token)
 {
@@ -53,14 +81,17 @@ int		token_get_word(char **pstr, char *pchar, t_token *token)
 			break ;
 		else if (!quote && ft_strchr(" 	", *pchar))
 			break ;
-		else if ((!quote || ((quote & Q_DQUOTE) && !ft_strchr("$`\"\\\n", *pchar + 1))) && *pchar == '\\')
-			quote ^= Q_BSLASH;
-		else if ((!quote || (quote & Q_SQUOTE)) && *pchar == '\'')
-			quote ^= Q_SQUOTE;
-		else if ((!quote || (quote & Q_DQUOTE)) && *pchar == '\"')
-			quote ^= Q_DQUOTE;
-		if (!(quote & Q_BSLASH) || *pchar != '\n')
+		else if (*pchar == '\'')
+			quote = squote(quote, token);
+		else if (*pchar == '\"')
+			quote = dquote(quote, token);
+		else if (*pchar == '\\')
+			quote = bslash(quote, pchar, token);
+		else if (!(quote & Q_BSLASH) || *pchar != '\n')
+		{
 			token->literal = append_char(token->literal, *pchar);
+			quote &= ~Q_BSLASH;
+		}
 		pchar++;
 	}
 	token->literal = rl_expansion(token->literal); 
