@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 17:38:22 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/16 12:11:03 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/17 09:25:56 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	key_newline(t_rl *rl)
 {
+	rl->quote_status &= ~Q_BSLASH;
 	rl_row_insert(rl, NULL);
 	rl->cx = 0;
 	rl->cy++;

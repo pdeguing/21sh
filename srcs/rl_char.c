@@ -6,16 +6,30 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 17:06:46 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 14:43:47 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/17 09:25:59 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+static void		rl_char_quote(t_rl *rl)
+{
+	if (rl->key == '\'' && !(rl->quote_status & (Q_BSLASH | Q_DQUOTE)))
+		rl->quote_status ^= Q_SQUOTE;
+	if (rl->key == '"' && !(rl->quote_status & (Q_BSLASH | Q_SQUOTE)))
+		rl->quote_status ^= Q_DQUOTE;
+	if (rl->key == '\\' && (!(rl->quote_status & (Q_BSLASH | Q_SQUOTE))))
+		rl->quote_status |= Q_BSLASH;
+	else
+		rl->quote_status &= ~Q_BSLASH;
+}
+
 void	rl_char_insert(t_rl *rl)
 {
 	char *tmp;
 
+	if (IS_QUOTE(rl->key))
+		rl_char_quote(rl);
 	tmp = rl->row[rl->cy].buf;
 	rl->row[rl->cy].bsize++;
 	rl->row[rl->cy].buf = ft_strnew(rl->row[rl->cy].bsize + 1);
@@ -27,18 +41,4 @@ void	rl_char_insert(t_rl *rl)
 	rl->row[rl->cy].buf[rl->cx] = rl->key;
 	ft_strdel(&tmp);
 	key_cursor_right(rl);
-}
-
-// to remove
-void	rl_char_quote(t_rl *rl)
-{
-	ft_printf(BLUE"key = %d / quote = %d\n"RESET, rl->key, rl->quote);
-	if (rl->key == '\\' && !(rl->quote & Q_SQUOTE))
-		rl->quote ^= Q_BSLASH;
-	else if ((!rl->quote || (rl->quote & Q_SQUOTE)) && rl->key == '\'')
-		rl->quote ^= Q_SQUOTE;
-	else if ((!rl->quote || rl->quote == Q_DQUOTE) && rl->key == '\"')
-		rl->quote ^= Q_DQUOTE;
-	else
-		rl->quote &= ~(Q_BSLASH);
 }

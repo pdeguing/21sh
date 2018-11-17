@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_get.c                                        :+:      :+:    :+:   */
+/*   parse_quote_remove.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/19 17:03:52 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 09:47:09 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/17 10:23:33 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/17 10:44:46 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int			token_get(char **pstr, t_token *token)
+char	*parse_quote_remove(char *str)
 {
-	char	*pchar;
+	char	*new;
+	char	*old;
+	int		i;
 
-	pchar = *pstr;
-	while (*pchar != '\0')
+	if (!str)
+		return (NULL);
+	old = str;
+	new = ft_strnew(ft_strlen(str));
+	i = 0;
+	while (*old)
 	{
-		if (*pchar == ' ' || *pchar == '	')
-			pchar++;
-		else if (ft_strchr(";|<>", *pchar))
-			return (token_get_op(pstr, pchar, token));
-		else if (ft_isdigit(*pchar) && token_get_io(pstr, pchar, token))
-			return (1);
-		else
-			return (token_get_word(pstr, pchar, token));
+		if (!ft_strchr("\\\'\"", *old))
+		{
+			new[i] = *old;
+			i++;
+		}
+		old++;
 	}
-	return (0);
+	new[i] = '\0';
+	ft_strdel(&str);
+	return (new);
 }

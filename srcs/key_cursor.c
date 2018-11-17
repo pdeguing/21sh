@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 16:24:39 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/08 16:08:17 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/17 09:54:15 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,14 @@ void	key_cursor_right(t_rl *rl)
 	rl->cx++;
 }
 
-void	key_cursor_up(t_rl *rl)
+void	key_cursor_beg(t_rl *rl)
 {
-	if (rl->cy == 0)
-		return ;
-	ft_putstr(tgetstr("up", NULL));
-	rl->cy--;
-	if (rl->cx > rl->row[rl->cy].bsize)
-		rl->cx = rl->row[rl->cy].bsize;
+	while (rl->cx)
+		key_cursor_left(rl);
 }
 
-void	key_cursor_down(t_rl *rl)
+void	key_cursor_end(t_rl *rl)
 {
-	if (rl->cy >= rl->row_max - 1)
-		return ;
-	ft_putstr(tgetstr("do", NULL));
-	rl->cy++;
-	if (rl->cx > rl->row[rl->cy].bsize)
-		rl->cx = rl->row[rl->cy].bsize;
+	while (rl->cx < rl->row[rl->cy].bsize)
+		key_cursor_right(rl);
 }

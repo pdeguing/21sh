@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 15:11:56 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/14 16:16:29 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/17 11:30:58 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*expand(char *arg, char symbol)
 	{
 		start = get_dstart(arg) + 1;
 		end = get_dend(arg, start);
-		var_name = ft_strsub(arg, start, end - 1);
+		var_name = ft_strsub(arg, start, end - start);
 	}
 	else
 		var_name = ft_strdup("HOME");

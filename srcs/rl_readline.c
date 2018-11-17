@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/16 13:26:57 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/17 10:33:45 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,9 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_HISTORY_UP, &key_history_up},
 								{KEY_HISTORY_DOWN, &key_history_down},
 								{KEY_NEWLINE, &key_newline},
-								{KEY_CURSOR_UP, &key_cursor_up},
-								{KEY_CURSOR_DOWN, &key_cursor_down},
 								{KEY_CURSOR_BEG, &key_cursor_beg},
 								{KEY_CURSOR_END, &key_cursor_end},
-								{KEY_CURSOR_PWORD, &key_cursor_pword},
-								{KEY_CURSOR_NWORD, &key_cursor_nword},
+								{KEY_CTL_ARROW, &key_ctl_arrow},
 								{KEY_COPY, &key_copy},
 								{KEY_PASTE, &key_paste},
 								{KEY_SIG_INT, &key_sig_int},
@@ -49,7 +46,7 @@ static t_rl	*rl_init(void)
 	new->row_max = 0;
 	rl_row_insert(new, NULL);
 	new->prompt_size = 0;
-	new->quote = 0;
+	new->quote_status = 0;
 	new->cx = 0;
 	new->cy = 0;
 	new->win_col = 0;
@@ -60,7 +57,7 @@ static t_rl	*rl_init(void)
 	return (new);
 }
 
-static int	control_handle(t_rl *rl)
+static int	rl_key_control(t_rl *rl)
 {
 	int		i;
 
@@ -96,19 +93,22 @@ char	*rl_readline(const char *prompt, int psize, int mode)
 		rl_display_print(rl);
 		rl->key = 0;
 		read(0, &rl->key, 4);
-		if (rl->key == '\n' && ((mode & NO_QUOTE) || !rl_quote(rl)))
-		{
-			ft_putstr("\n");
+		if (rl->key == '\n' && ((mode & NO_QUOTE) || !rl->quote_status))
 			break ;
-		}
 		if (ft_isprint(rl->key))
 			rl_char_insert(rl);
 		else
-			control_handle(rl);
+			rl_key_control(rl);
 	}
-	raw_mode_disable();
-	line = rl_row_join(rl);
+	line = NULL;
+	if (rl->status >= 0)
+	{
+		line = rl_row_join(rl);
+		if (!(mode & NO_HISTORY))
+			history_add(line, &history);
+	}
 	free(rl);
-	history_add(line, &history);
+	raw_mode_disable();
+	ft_putstr("\n");
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/16 12:09:18 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/17 10:34:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ struct						s_tree
 t_tree						*tree_new(t_token *token);
 void						tree_insert(t_tree **root, t_tree *new);
 
+char						*parse_quote_remove(char *str);
+
 t_tree						*parse(char *input);
 
 /* Execute ****************************************************************** */
@@ -184,6 +186,7 @@ t_io						*io_stack_new(int dst, int src, int op);
 
 # define DEFAULT			0x0
 # define NO_QUOTE			0b0000001
+# define NO_HISTORY			0b0000010
 
 # define IS_QUOTE(c)		ft_strchr("\\\'\"", c)
 
@@ -208,19 +211,21 @@ enum						e_keys
 	 KEY_HISTORY_UP = 4283163,
 	 KEY_HISTORY_DOWN = 4348699,
 	 KEY_HISTORY_SEARCH,
-	 KEY_CURSOR_UP = 2117425947,
-	 KEY_CURSOR_DOWN = 2117491483,
 	 KEY_CURSOR_BEG = 4741915,
 	 KEY_CURSOR_END = 4610843,
-	 KEY_CURSOR_PWORD = 5,
-	 KEY_CURSOR_NWORD = 23,
+	 KEY_CTL_ARROW = 993090331,
 	 KEY_NEWLINE = 10,
 	 KEY_COPY = 16,
 	 KEY_PASTE = 12,
 	 KEY_SIG_INT = 3,
 	 KEY_SIG_EOF = 4,
-	 KEY_MAX = 19
+	 KEY_MAX = 16
 };
+
+# define KEY_CTL_UP			16693
+# define KEY_CTL_DOWN		16949
+# define KEY_CTL_LEFT		17461
+# define KEY_CTL_RIGHT		17205
 
 struct						s_keymap
 {
@@ -237,16 +242,17 @@ void						key_del_end(t_rl *rl);
 void						key_history_up(t_rl *rl);
 void						key_history_down(t_rl *rl);
 void						key_newline(t_rl *rl);
-void						key_cursor_up(t_rl *rl);
-void						key_cursor_down(t_rl *rl);
 void						key_cursor_beg(t_rl *rl);
 void						key_cursor_end(t_rl *rl);
-void						key_cursor_pword(t_rl *rl);
-void						key_cursor_nword(t_rl *rl);
 void						key_copy(t_rl *rl);
-void						key_paste(t_rl *sh);
-void						key_sig_int(t_rl *sh);
-void						key_sig_eof(t_rl *sh);
+void						key_paste(t_rl *rl);
+void						key_sig_int(t_rl *rl);
+void						key_sig_eof(t_rl *rl);
+void						key_ctl_arrow(t_rl *rl);
+void						key_ctl_up(t_rl *rl);
+void						key_ctl_down(t_rl *rl);
+void						key_ctl_left(t_rl *rl);
+void						key_ctl_right(t_rl *rl);
 
 struct						s_rl
 {
@@ -254,7 +260,7 @@ struct						s_rl
 	t_row					*row;
 	int						row_max;
 	int						prompt_size;
-	int						quote; /* might be removable */
+	int						quote_status;
 	int						cx;
 	int						cy;
 	int						win_col;
@@ -267,11 +273,9 @@ struct						s_rl
 void						raw_mode_enable(void);
 void						raw_mode_disable(void);
 
-int							rl_quote(t_rl *rl);
 char						*rl_expansion(char *str);
 
 void						rl_char_insert(t_rl *rl);
-void						rl_char_quote(t_rl *rl);
 
 void						rl_row_insert(t_rl *rl, char *buf);
 char						*rl_row_join(t_rl *rl);

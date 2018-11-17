@@ -6,46 +6,50 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 09:48:12 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/16 13:26:55 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/17 11:30:57 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*
-** Ok so Here Doc is working, we just need to precise the way we get the input 
-** with readline. Maybe we should use get_next_line instead. We need to 
-** keep the newlines in the final string and should not append the limiter
-** to it
-*/
-
 void	exe_op_dless(t_tree **root, char flag, t_io *io_stack)
 {
 	char	*line;
+	char	*delimiter;
 	char	*heredoc;
+	int		expand;
 	t_tree	*head;
 	int		p[2];
 
 	head = *root;
 	heredoc = ft_strnew(0);
 	line = ft_strnew(0);
+	delimiter = head->right->token->literal;
 	if (pipe(p) == -1)
 	{
 		perror("21sh");
 		exit(EXIT_FAILURE);
 	}
+	expand = 1;
+	if (ft_strchr(delimiter, '\\') || ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '\"'))
+	{
+		expand = 0;
+		delimiter = parse_quote_remove(delimiter);
+	}
 	while (1)
 	{
 		ft_strdel(&line);
-		line = rl_readline("> ", 2, NO_QUOTE);
+		line = rl_readline("> ", 2, NO_QUOTE | NO_HISTORY);
 		if (!line)
 			line = ft_strnew(0);
-		if (!ft_strcmp(head->right->token->literal, line))
+		if (!ft_strcmp(delimiter, line))
 			break ;
 		line = ft_strffjoin(line, "\n");
 		heredoc = ft_strffjoin(heredoc, line);
 	}
 	ft_strdel(&line);
+	if (expand)
+		heredoc = rl_expansion(heredoc);
 	ft_putstr_fd(heredoc, p[WRITE]);
 	close(p[WRITE]);
 	execute_tree(&head->left, flag, io_push(0, p[READ], io_stack, PIPELINE));
