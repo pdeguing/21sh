@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 10:34:17 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 10:04:03 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int							sh_prompt_get(char **ref);
 
 void						init_shell(char **env);
 
+int							ft_strisdigit(char *str);
 /* Signals ****************************************************************** */
 
 void						handle_sig(int sig);

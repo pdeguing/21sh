@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 12:43:54 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/26 17:19:42 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 10:05:39 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_io	*io_push(int dst, int src, t_io *io_stack, int op)
 	{
 		while (head)
 		{
-			if (head->op == PIPELINE && head->dst == dst)
+			if (head->op != PIPELINE && head->dst == dst)
 			{
 				head->src = src;
 				head->op = op;

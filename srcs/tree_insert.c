@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 09:04:48 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/26 12:17:39 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 10:05:38 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ static int	precedence_cmp(t_tree *new, t_tree *head)
 
 	tnew = new->token->type;
 	thead = head->token->type;
-	/*
-	ft_printf(RED"PRECEDENCE: "RESET"%d | vs | %d\n", type1, type2);
-	*/
+//	ft_printf(RED"PRECEDENCE: "RESET"%d | vs | %d\n", thead, tnew);
 	if (tnew == IO_NUMBER)
 		tnew = LESS;
 	if (IS_OP(tnew))
 		tnew = LESS;
-	if (IS_OP(thead))
+	if (IS_OP(thead) || thead == PIPELINE)
 		thead = LESS;
 	return (tnew - thead);
 }

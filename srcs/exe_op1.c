@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 09:48:12 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 11:30:57 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 09:23:45 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,12 @@ void	exe_op_greatand(t_tree **root, char flag, t_io *io_stack)
 	t_tree	*head;
 
 	head = *root;
-	fd = '-';
-	if (ft_strcmp(head->right->token->literal, "-"))
+	if (!head->right || !head->right->token->literal)
+		fd = 1;
+	else if (ft_strcmp(head->right->token->literal, "-"))
 		fd = ft_atoi(head->right->token->literal);
+	else
+		fd = '-';
 	/* Check if open for output */
 	execute_tree(&head->left, flag, io_push(1, fd, io_stack, GREATAND));
 }
@@ -91,7 +94,12 @@ void	exe_op_lessand(t_tree **root, char flag, t_io *io_stack)
 	t_tree	*head;
 
 	head = *root;
-	fd = ft_atoi(head->right->token->literal);
+	if (!head->right || !head->right->token->literal)
+		fd = 0;
+	else if (ft_strcmp(head->right->token->literal, "-"))
+		fd = ft_atoi(head->right->token->literal);
+	else
+		fd = '-';
 	/* Check if open for input */
 	execute_tree(&head->left, flag, io_push(0, fd, io_stack, LESSAND));
 }
