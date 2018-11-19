@@ -1,22 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execute_bin.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/22 12:23:27 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 10:51:49 by pdeguing         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "shell.h"
 
 char	**get_path(void)
 {
 	char	*path;
 
-	path = get_varenv("PATH");
+	path = env_getvar("PATH");
 	if (path == NULL)
 		return (NULL);
 	return (ft_strsplit(path, ':'));
@@ -68,7 +56,7 @@ int		exec_allpath(char **args)
 	return (-1);
 }
 
-void		execute_bin(char **args, char flag, t_io **io_stack)
+void		exe_bin(char **args, char flag, t_io **io_stack)
 {
 	pid_t		pid;
 

@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   builtin_unsetenv.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/30 16:41:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 10:51:47 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 11:39:35 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 11:39:41 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		init_shell(char **env)
+int		builtin_unsetenv(char **args)
 {
-	char	*tname;
-	char	tbuf[1024];
+	int		i;
 
-	tname = getenv("TERM");
-	tgetent(tbuf, tname);
-	init_env(env);
-	signal(SIGTERM, SIG_IGN);
+	i = -1;
+	while (args[++i] != NULL)
+	{
+		if (ft_strchr(args[i], '=') || ft_strchr(args[i], '*'))
+		{
+			ft_printf("unsetenv: %s: not a valid identifier\n", args[i]);
+			continue ;
+		}
+		if (ft_pstrcchr(g_env, args[i], '=') != NULL)
+			env_remove(args[i]);
+	}
+	return (0);
 }

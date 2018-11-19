@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strisdigit.c                                    :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 09:08:06 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 09:11:53 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 11:39:05 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 11:39:10 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_strisdigit(char *str)
+int		builtin_exit(char **args)
 {
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
-	}
-	return (1);
+	(void)args;
+	raw_mode_disable();
+	exit(EXIT_SUCCESS); // clean exit
 }

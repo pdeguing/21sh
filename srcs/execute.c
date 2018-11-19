@@ -5,26 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 06:40:28 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/25 06:46:13 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 11:46:06 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 11:46:08 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-	// We need to go down left counting operators
-	// Then execute from bottom left
-	// Get args from right of cmd
-	// And change the execution environment depending on
-	// counted operators.
-
-/*
-** We can implement a stack of int identified via our type enum,
-** but isn't it too much?
-*/
-
-
-void			execute(t_tree **root)
+int			get_nbr_args(t_tree **root)
 {
-	execute_tree(root, WAIT, NULL);
+	t_tree	*head;
+	int		i;
+
+	i = 0;
+	head = *root;
+	while (head)
+	{
+		i++;
+		head = head->right;
+	}
+	return (i);
+}
+
+char		**get_args(t_tree **root)
+{
+	char	**args;
+	t_tree	*head;
+	int		size;
+	int		i;
+
+	size = get_nbr_args(root);
+	args = malloc(sizeof(char *) * (size + 1));
+	args[size] = NULL;
+	head = *root;
+	i = 0;
+	while (i < size)
+	{
+		args[i] = head->token->literal;
+		head = head->right;
+		i++;
+	}
+	return (args);
+}
+
+void				(*g_exe[TOTAL_TYPE])(t_tree **, char, t_io *) = {
+	[IO_NUMBER] = &exe_op_io,
+	[LESS] = &exe_op_less,
+	[GREAT] = &exe_op_great,
+	[DLESS] = &exe_op_dless,
+	[DGREAT] = &exe_op_dgreat,
+	[LESSAND] = &exe_op_lessand,
+	[GREATAND] = &exe_op_greatand,
+	[PIPELINE] = &exe_op_pipe,
+	[SEMICOLON] = &exe_op_semicolon
+};
+
+void		execute(t_tree **root, char flag, t_io *io_stack)
+{
+	t_tree	*head;
+
+	head = *root;
+	if (!head)
+		return ;
+	if (!head->left)
+		exe_cmd(get_args(&head), flag, &io_stack);
+	else
+		return (g_exe[head->token->type](root, flag, io_stack));
 }

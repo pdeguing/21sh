@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 15:11:56 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 11:30:58 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 10:30:19 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*expand(char *arg, char symbol)
 		var_name = ft_strdup("HOME");
 	new = ft_strsub(arg, 0, start - 1);
 	suffix = ft_strsub(arg, end, ft_strlen(arg + end));
-	new = append_varenv(new, get_varenv(var_name));
+	new = append_varenv(new, env_getvar(var_name));
 	new = ft_strfjoin(new, suffix);
 	ft_strdel(&arg);
 	ft_strdel(&var_name);

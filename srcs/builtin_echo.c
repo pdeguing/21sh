@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_envlen.c                                       :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/26 11:14:34 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 07:54:01 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 11:38:40 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 11:38:47 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		get_envlen(char **env)
+int		builtin_echo(char **args)
 {
 	int		i;
 
 	i = 0;
-	while (env[i] != NULL)
+	while (args[i])
+	{
+		ft_printf("%s", args[i]);
 		i++;
-	return (i);
+		if (args[i])
+			ft_printf(" ");
+	}
+	ft_printf("\n");
+	return (0);
 }

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsh.c                                              :+:      :+:    :+:   */
+/*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:46:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 09:20:53 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 10:19:24 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 11:44:20 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void		gsh_loop(void)
+static void		sh_loop(void)
 {
 	char		*line;
 	char		*prompt;
@@ -31,7 +31,7 @@ static void		gsh_loop(void)
 		if (!ast)
 			continue ;
 //		tree_print(&ast);
-		execute(&ast);
+		execute(&ast, WAIT, NULL);
 	}
 }
 
@@ -40,7 +40,7 @@ int		main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 
-	init_shell(env);
-	gsh_loop();
+	sh_init(env);
+	sh_loop();
 	return (0);
 }

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/30 17:50:14 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/30 17:50:24 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 10:14:55 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 10:15:31 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	init_env(char **env)
+void	env_init(char **env)
 {
 	int		i;
 	int		len;
 
-	len = get_envlen(env);
+	len = env_getlen(env);
 	if (len == 0)
 		return ;
 	g_env = (char **)malloc(sizeof(char *) * (len + 1));

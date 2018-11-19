@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   sh_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/25 15:03:33 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 07:53:15 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 10:14:45 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 10:15:40 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_env(char **args)
+void		sh_init(char **env)
 {
-	int		i;
+	char	*tname;
+	char	tbuf[1024];
 
-	if (args[0])
-		ft_printf("");
-	i = 0;
-	while (g_env[i])
-	{
-		ft_printf("%s\n", g_env[i]);
-		i++;
-	}
-	return (0);
+	tname = getenv("TERM");
+	tgetent(tbuf, tname);
+	env_init(env);
+	signal(SIGTERM, SIG_IGN);
 }

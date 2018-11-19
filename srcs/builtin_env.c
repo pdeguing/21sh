@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/25 15:01:08 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 07:53:06 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 11:38:53 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 11:38:59 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_echo(char **args)
+int		builtin_env(char **args)
 {
 	int		i;
 
+	if (args[0])
+		ft_printf("");
 	i = 0;
-	while (args[i])
+	while (g_env[i])
 	{
-		ft_printf("%s", args[i]);
+		ft_printf("%s\n", g_env[i]);
 		i++;
-		if (args[i])
-			ft_printf(" ");
 	}
-	ft_printf("\n");
 	return (0);
 }

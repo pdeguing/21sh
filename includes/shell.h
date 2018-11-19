@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 10:04:03 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 11:49:03 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,20 @@ typedef struct s_row		t_row;
 
 char						**g_env;
 
-void						init_env(char **env);
-char						*get_varenv(char *varname);
-int							get_envlen(char **env);
+void						env_init(char **env);
+
+int							env_getlen(char **env);
+int							env_replace(char *arg);
+void						env_add(char *arg);
+void						env_remove(char *arg);
+char						*env_getvar(char *varname);
 
 /* General ****************************************************************** */
 
 int							sh_prompt_get(char **ref);
 
-void						init_shell(char **env);
+void						sh_init(char **env);
 
-int							ft_strisdigit(char *str);
 /* Signals ****************************************************************** */
 
 void						handle_sig(int sig);
@@ -66,14 +69,12 @@ void						handle_sig_zom(int sig);
 
 # define BUILTIN_NBR		6
 
-int							ft_echo(char **args);
-int							ft_cd(char **args);
-int							ft_env(char **args);
-int							ft_setenv(char **args);
-int							ft_unsetenv(char **args);
-int							ft_exit(char **args);
-
-int							replace_env(char *arg);
+int							builtin_echo(char **args);
+int							builtin_cd(char **args);
+int							builtin_env(char **args);
+int							builtin_setenv(char **args);
+int							builtin_unsetenv(char **args);
+int							builtin_exit(char **args);
 
 /* Parsing ****************************************************************** */
 
@@ -146,10 +147,9 @@ void				exe_op_greatand(t_tree **root, char flag, t_io *io_stack);
 void				exe_op_pipe(t_tree **root, char flag, t_io *io_stack);
 void				exe_op_semicolon(t_tree **root, char flag, t_io *io_stack);
 
-void				execute_bin(char **args, char flag, t_io **io_stack);
-void				execute_cmd(char **args, char flag, t_io **io_stack);
-void				execute_tree(t_tree **root, char flag, t_io *io_stack);
-void				execute(t_tree **root);
+void				exe_bin(char **args, char flag, t_io **io_stack);
+void				exe_cmd(char **args, char flag, t_io **io_stack);
+void				execute(t_tree **root, char flag, t_io *io_stack);
 
 /* History ****************************************************************** */
 

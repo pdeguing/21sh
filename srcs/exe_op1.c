@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 09:48:12 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 09:23:45 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 11:46:57 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	exe_op_dless(t_tree **root, char flag, t_io *io_stack)
 		heredoc = rl_expansion(heredoc);
 	ft_putstr_fd(heredoc, p[WRITE]);
 	close(p[WRITE]);
-	execute_tree(&head->left, flag, io_push(0, p[READ], io_stack, PIPELINE));
+	execute(&head->left, flag, io_push(0, p[READ], io_stack, PIPELINE));
 	close(p[READ]);
 }
 
@@ -68,7 +68,7 @@ void	exe_op_dgreat(t_tree **root, char flag, t_io *io_stack)
 		perror(head->right->token->literal);
 		exit(EXIT_FAILURE);
 	}
-	execute_tree(&head->left, flag, io_push(1, fd, io_stack, DGREAT));
+	execute(&head->left, flag, io_push(1, fd, io_stack, DGREAT));
 	close(fd);
 }
 
@@ -85,7 +85,7 @@ void	exe_op_greatand(t_tree **root, char flag, t_io *io_stack)
 	else
 		fd = '-';
 	/* Check if open for output */
-	execute_tree(&head->left, flag, io_push(1, fd, io_stack, GREATAND));
+	execute(&head->left, flag, io_push(1, fd, io_stack, GREATAND));
 }
 
 void	exe_op_lessand(t_tree **root, char flag, t_io *io_stack)
@@ -101,5 +101,5 @@ void	exe_op_lessand(t_tree **root, char flag, t_io *io_stack)
 	else
 		fd = '-';
 	/* Check if open for input */
-	execute_tree(&head->left, flag, io_push(0, fd, io_stack, LESSAND));
+	execute(&head->left, flag, io_push(0, fd, io_stack, LESSAND));
 }
