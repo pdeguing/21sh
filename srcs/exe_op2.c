@@ -6,17 +6,17 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 09:49:31 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 11:47:18 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:22:39 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	exe_op_pipe(t_tree **root, char flag, t_io *io_stack)
+void	exe_op_pipe(t_ast **root, char flag, t_io *io_stack)
 {
 	int		p[2];
 	t_io	*io_cpy;
-	t_tree	*head;
+	t_ast	*head;
 
 	head = *root;
 	if (pipe(p) == -1)
@@ -31,9 +31,9 @@ void	exe_op_pipe(t_tree **root, char flag, t_io *io_stack)
 	close(p[READ]);
 }
 
-void	exe_op_semicolon(t_tree **root, char flag, t_io *io_stack)
+void	exe_op_semicolon(t_ast **root, char flag, t_io *io_stack)
 {
-	t_tree	*head;
+	t_ast	*head;
 
 	head = *root;
 	execute(&head->left, flag, io_stack);

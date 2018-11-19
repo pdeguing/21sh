@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 11:49:03 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:25:13 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 typedef struct s_token		t_token;
 typedef enum e_type			t_type;
-typedef struct s_tree		t_tree;
+typedef struct s_ast		t_ast;
 typedef struct s_dlist		t_dlist;
 typedef struct s_io			t_io;
 typedef struct s_keymap		t_keymap;
@@ -114,19 +114,20 @@ int							token_get_io(char **pstr, char *pchar, t_token *token);
 int							token_get_op(char **pstr, char *pchar, t_token *token);
 int							token_get_word(char **pstr, char *pchar, t_token *token);
 
-struct						s_tree
+struct						s_ast
 {
 	t_token					*token;
-	t_tree					*left;
-	t_tree					*right;
+	t_ast					*left;
+	t_ast					*right;
 };
 
-t_tree						*tree_new(t_token *token);
-void						tree_insert(t_tree **root, t_tree *new);
+t_ast						*ast_new(t_token *token);
+void						ast_insert(t_ast **root, t_ast *new);
+void						ast_free(t_ast **root);
 
 char						*parse_quote_remove(char *str);
 
-t_tree						*parse(char *input);
+t_ast						*parse(char *input);
 
 /* Execute ****************************************************************** */
 
@@ -137,19 +138,19 @@ t_tree						*parse(char *input);
 # define WRITE			1
 # define WAIT			0x1
 
-void				exe_op_io(t_tree **root, char flag, t_io *io_stack);
-void				exe_op_less(t_tree **root, char flag, t_io *io_stack);
-void				exe_op_great(t_tree **root, char flag, t_io *io_stack);
-void				exe_op_dless(t_tree **root, char flag, t_io *io_stack);
-void				exe_op_dgreat(t_tree **root, char flag, t_io *io_stack);
-void				exe_op_lessand(t_tree **root, char flag, t_io *io_stack);
-void				exe_op_greatand(t_tree **root, char flag, t_io *io_stack);
-void				exe_op_pipe(t_tree **root, char flag, t_io *io_stack);
-void				exe_op_semicolon(t_tree **root, char flag, t_io *io_stack);
+void				exe_op_io(t_ast **root, char flag, t_io *io_stack);
+void				exe_op_less(t_ast **root, char flag, t_io *io_stack);
+void				exe_op_great(t_ast **root, char flag, t_io *io_stack);
+void				exe_op_dless(t_ast **root, char flag, t_io *io_stack);
+void				exe_op_dgreat(t_ast **root, char flag, t_io *io_stack);
+void				exe_op_lessand(t_ast **root, char flag, t_io *io_stack);
+void				exe_op_greatand(t_ast **root, char flag, t_io *io_stack);
+void				exe_op_pipe(t_ast **root, char flag, t_io *io_stack);
+void				exe_op_semicolon(t_ast **root, char flag, t_io *io_stack);
 
 void				exe_bin(char **args, char flag, t_io **io_stack);
 void				exe_cmd(char **args, char flag, t_io **io_stack);
-void				execute(t_tree **root, char flag, t_io *io_stack);
+void				execute(t_ast **root, char flag, t_io *io_stack);
 
 /* History ****************************************************************** */
 
@@ -293,6 +294,6 @@ char						*rl_readline(const char *prompt, int psize, int mode);
 # define STR_2				"ls ; echo hello"
 # define STR_3				"cat -e; ls | cat -e > file; cat -e > file < input"
 
-void						tree_print(t_tree **root);
+void						ast_print(t_ast **root);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:19:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 11:44:20 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 13:40:18 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,24 @@ static void		sh_loop(void)
 	char		*line;
 	char		*prompt;
 	int			psize;
-	t_tree		*ast;
+	t_ast		*ast;
 
 	signal(SIGINT, handle_sig);
+	line = NULL;
+	prompt = NULL;
+	ast = NULL;
 	while (1)
 	{
 		psize = sh_prompt_get(&prompt);
 		line = rl_readline(prompt, psize, DEFAULT);
-		if (!line)
-			continue ;
-//		ft_printf(RED"> %s "RESET, line);
 		ast = parse(line);
-		if (!ast)
-			continue ;
-//		tree_print(&ast);
-		execute(&ast, WAIT, NULL);
+		/*
+		if (ast)
+			execute(&ast, WAIT, NULL);
+			*/
+		ft_strdel(&prompt);
+		ft_strdel(&line);
+		ast_free(&ast);
 	}
 }
 

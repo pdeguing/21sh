@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tree_insert.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/19 09:04:48 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 10:05:38 by pdeguing         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "shell.h"
 
-static int	precedence_cmp(t_tree *new, t_tree *head)
+static int	precedence_cmp(t_ast *new, t_ast *head)
 {
 	int		tnew;
 	int		thead;
@@ -29,9 +17,9 @@ static int	precedence_cmp(t_tree *new, t_tree *head)
 	return (tnew - thead);
 }
 
-void		tree_insert(t_tree **root, t_tree *new)
+void		ast_insert(t_ast **root, t_ast *new)
 {
-	t_tree	*head;
+	t_ast	*head;
 
 	head = *root;
 	if (head == NULL)
@@ -42,7 +30,7 @@ void		tree_insert(t_tree **root, t_tree *new)
 		new->left = head;
 	}
 	else if ((IS_OP(head->token->type) && head->right) || head->token->type == IO_NUMBER)
-		tree_insert(&head->left, new);
+		ast_insert(&head->left, new);
 	else
-		tree_insert(&head->right, new);
+		ast_insert(&head->right, new);
 }

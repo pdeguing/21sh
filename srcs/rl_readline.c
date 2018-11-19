@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 12:30:08 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 13:38:10 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,21 @@ t_keymap g_keymap[KEY_MAX] = {
 								{KEY_HISTORY_SEARCH, &key_history_search},
 								*/
 };
+
+static void	rl_free(t_rl *rl)
+{
+	int		i;
+
+	i = 0;
+	while (i < rl->row_max)
+	{
+		if (rl->row[i].buf)
+			ft_strdel(&rl->row[i].buf);
+		i++;
+	}
+	free(rl->row);
+	free(rl);
+}
 
 static t_rl	*rl_init(void)
 {
@@ -107,7 +122,7 @@ char	*rl_readline(const char *prompt, int psize, int mode)
 		if (!(mode & NO_HISTORY))
 			history_add(line, &history);
 	}
-	free(rl);
+	rl_free(rl);
 	raw_mode_disable();
 	ft_putstr("\n");
 	return (line);

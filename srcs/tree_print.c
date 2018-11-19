@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tree_print.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/20 07:02:10 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/15 09:17:31 by pdeguing         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "shell.h"
 
 char						*g_strtype[TOTAL_TYPE] = {
@@ -28,14 +16,16 @@ char						*g_strtype[TOTAL_TYPE] = {
 	[WORD] = BLUE"word"RESET
 };
 
-void	tree_print(t_tree **root)
+void	ast_print(t_ast **root)
 {
-	t_tree	*head;
+	t_ast	*head;
 
 	head = *root;
+	if (!head)
+		return ;
 	if (head->left != NULL)
-		tree_print(&head->left);
+		ast_print(&head->left);
 	ft_printf("%-20s > %s\n", g_strtype[head->token->type], head->token->literal);
 	if (head->right != NULL)
-		tree_print(&head->right);
+		ast_print(&head->right);
 }

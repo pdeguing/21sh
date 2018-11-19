@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 12:01:21 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 09:02:12 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 13:38:08 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*rl_row_join(t_rl *rl)
 	while (i < rl->row_max)
 	{
 		if (rl->row[i].buf)
-			line = ft_strfjoin(line, rl->row[i].buf);
+			line = ft_strffjoin(line, rl->row[i].buf);
 		i++;
 		if (i < rl->row_max)
 			line = ft_strffjoin(line, "\n");

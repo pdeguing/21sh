@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_exit.c                                     :+:      :+:    :+:   */
+/*   ast_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 11:39:05 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 11:57:31 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/19 12:14:11 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 13:17:41 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		builtin_exit(char **args)
+void	ast_free(t_ast **root)
 {
-	(void)args;
-	raw_mode_disable();
-	exit(EXIT_SUCCESS); // clean exit
+	t_ast	*head;
+
+	head = *root;
+	if (!head)
+		return ;
+	ast_free(&head->left);
+	free(head->left);
+	ast_free(&head->right);
+	free(head->right);
+	ft_strdel(&head->token->literal);
+	free(head->token);
 }

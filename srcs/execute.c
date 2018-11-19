@@ -6,15 +6,15 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 11:46:06 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 11:46:08 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:22:46 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int			get_nbr_args(t_tree **root)
+int			get_nbr_args(t_ast **root)
 {
-	t_tree	*head;
+	t_ast	*head;
 	int		i;
 
 	i = 0;
@@ -27,10 +27,10 @@ int			get_nbr_args(t_tree **root)
 	return (i);
 }
 
-char		**get_args(t_tree **root)
+char		**get_args(t_ast **root)
 {
 	char	**args;
-	t_tree	*head;
+	t_ast	*head;
 	int		size;
 	int		i;
 
@@ -48,7 +48,7 @@ char		**get_args(t_tree **root)
 	return (args);
 }
 
-void				(*g_exe[TOTAL_TYPE])(t_tree **, char, t_io *) = {
+void				(*g_exe[TOTAL_TYPE])(t_ast **, char, t_io *) = {
 	[IO_NUMBER] = &exe_op_io,
 	[LESS] = &exe_op_less,
 	[GREAT] = &exe_op_great,
@@ -60,9 +60,9 @@ void				(*g_exe[TOTAL_TYPE])(t_tree **, char, t_io *) = {
 	[SEMICOLON] = &exe_op_semicolon
 };
 
-void		execute(t_tree **root, char flag, t_io *io_stack)
+void		execute(t_ast **root, char flag, t_io *io_stack)
 {
-	t_tree	*head;
+	t_ast	*head;
 
 	head = *root;
 	if (!head)

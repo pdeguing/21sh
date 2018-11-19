@@ -1,22 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tree_new.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/19 09:00:08 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/10/23 10:12:40 by pdeguing         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "shell.h"
 
-t_tree		*tree_new(t_token *token)
+t_ast		*ast_new(t_token *token)
 {
-	t_tree	*new;
+	t_ast	*new;
 
-	new = (t_tree *)malloc(sizeof(t_tree));
+	new = (t_ast *)malloc(sizeof(t_ast));
 	if (new == NULL)
 		return (NULL);
 	new->token = token;

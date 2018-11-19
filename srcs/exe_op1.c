@@ -6,19 +6,19 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 09:48:12 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 11:46:57 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:22:31 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	exe_op_dless(t_tree **root, char flag, t_io *io_stack)
+void	exe_op_dless(t_ast **root, char flag, t_io *io_stack)
 {
 	char	*line;
 	char	*delimiter;
 	char	*heredoc;
 	int		expand;
-	t_tree	*head;
+	t_ast	*head;
 	int		p[2];
 
 	head = *root;
@@ -56,10 +56,10 @@ void	exe_op_dless(t_tree **root, char flag, t_io *io_stack)
 	close(p[READ]);
 }
 
-void	exe_op_dgreat(t_tree **root, char flag, t_io *io_stack)
+void	exe_op_dgreat(t_ast **root, char flag, t_io *io_stack)
 {
 	int		fd;
-	t_tree	*head;
+	t_ast	*head;
 
 	head = *root;
 	fd = open(head->right->token->literal, O_WRONLY | O_APPEND | O_CREAT, 0644);
@@ -72,10 +72,10 @@ void	exe_op_dgreat(t_tree **root, char flag, t_io *io_stack)
 	close(fd);
 }
 
-void	exe_op_greatand(t_tree **root, char flag, t_io *io_stack)
+void	exe_op_greatand(t_ast **root, char flag, t_io *io_stack)
 {
 	int		fd;
-	t_tree	*head;
+	t_ast	*head;
 
 	head = *root;
 	if (!head->right || !head->right->token->literal)
@@ -88,10 +88,10 @@ void	exe_op_greatand(t_tree **root, char flag, t_io *io_stack)
 	execute(&head->left, flag, io_push(1, fd, io_stack, GREATAND));
 }
 
-void	exe_op_lessand(t_tree **root, char flag, t_io *io_stack)
+void	exe_op_lessand(t_ast **root, char flag, t_io *io_stack)
 {
 	int		fd;
-	t_tree	*head;
+	t_ast	*head;
 
 	head = *root;
 	if (!head->right || !head->right->token->literal)
