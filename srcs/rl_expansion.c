@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 15:11:56 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 10:30:19 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:39:10 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ static int		get_dend(char *arg, int dstart)
 	return (i);
 }
 
-static char	*append_varenv(char *old, char *varenv)
+static char		*append_varenv(char *old, char *varenv)
 {
 	if (varenv == NULL)
 		return (old);
 	return (ft_strffjoin(old, varenv));
 }
 
-static char	*expand(char *arg, char symbol)
+static char		*expand(char *arg, char symbol)
 {
 	char	*new;
 	char	*var_name;
@@ -68,7 +68,7 @@ static char	*expand(char *arg, char symbol)
 	return (new);
 }
 
-char	*rl_expansion(char *str)
+char			*rl_expansion(char *str)
 {
 	char	*symbol;
 

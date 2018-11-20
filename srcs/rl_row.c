@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 12:01:21 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 13:38:08 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:46:05 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_row	rl_row_new(char *buf)
 	return (new);
 }
 
-void	rl_row_insert(t_rl *rl, char *buf)
+void			rl_row_insert(t_rl *rl, char *buf)
 {
 	t_row	*tmp;
 	int		i;
@@ -44,7 +44,7 @@ void	rl_row_insert(t_rl *rl, char *buf)
 	free(tmp);
 }
 
-char	*rl_row_join(t_rl *rl)
+char			*rl_row_join(t_rl *rl)
 {
 	char	*line;
 	int		i;

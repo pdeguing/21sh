@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 09:52:40 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 10:05:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:55:28 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	key_ctl_left(t_rl *rl)
 
 void	key_ctl_right(t_rl *rl)
 {
-	while (rl->cx < rl->row[rl->cy].bsize && !ft_strchr(" 	", rl->row[rl->cy].buf[rl->cx]))
+	while (rl->cx < rl->row[rl->cy].bsize &&
+			!ft_strchr(" 	", rl->row[rl->cy].buf[rl->cx]))
 		key_cursor_right(rl);
-	while (rl->cx < rl->row[rl->cy].bsize && ft_strchr(" 	", rl->row[rl->cy].buf[rl->cx]))
+	while (rl->cx < rl->row[rl->cy].bsize &&
+			ft_strchr(" 	", rl->row[rl->cy].buf[rl->cx]))
 		key_cursor_right(rl);
 }

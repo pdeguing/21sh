@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 17:06:46 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 12:27:20 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:54:53 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		rl_char_quote(t_rl *rl)
 		rl->quote_status &= ~Q_BSLASH;
 }
 
-void	rl_char_insert(t_rl *rl)
+void			rl_char_insert(t_rl *rl)
 {
 	char *tmp;
 
@@ -36,7 +36,8 @@ void	rl_char_insert(t_rl *rl)
 	if (tmp)
 	{
 		ft_strcpy(rl->row[rl->cy].buf, tmp);
-		ft_memmove(rl->row[rl->cy].buf + rl->cx + 1, rl->row[rl->cy].buf + rl->cx, rl->row[rl->cy].bsize - rl->cx);
+		ft_memmove(rl->row[rl->cy].buf + rl->cx + 1,
+				rl->row[rl->cy].buf + rl->cx, rl->row[rl->cy].bsize - rl->cx);
 	}
 	rl->row[rl->cy].buf[rl->cx] = rl->key;
 	ft_strdel(&tmp);

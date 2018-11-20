@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 16:22:53 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/06 07:12:40 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:56:30 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	key_del_backspace(t_rl *rl)
 {
 	if (!(rl->cx > 0))
 		return ;
-	ft_memmove(rl->row[rl->cy].buf + rl->cx - 1, rl->row[rl->cy].buf + rl->cx, rl->row[rl->cy].bsize - rl->cx + 1);
+	ft_memmove(rl->row[rl->cy].buf + rl->cx - 1,
+			rl->row[rl->cy].buf + rl->cx, rl->row[rl->cy].bsize - rl->cx + 1);
 	rl->row[rl->cy].bsize--;
 	key_cursor_left(rl);
 }
@@ -25,7 +26,8 @@ void	key_del_delete(t_rl *rl)
 {
 	if (!(rl->cx < rl->row[rl->cy].bsize))
 		return ;
-	ft_memmove(rl->row[rl->cy].buf + rl->cx, rl->row[rl->cy].buf + rl->cx + 1, rl->row[rl->cy].bsize - rl->cx + 1);
+	ft_memmove(rl->row[rl->cy].buf + rl->cx, rl->row[rl->cy].buf + rl->cx + 1,
+			rl->row[rl->cy].bsize - rl->cx + 1);
 	rl->row[rl->cy].bsize--;
 }
 

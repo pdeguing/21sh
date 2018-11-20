@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 10:08:30 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 13:36:31 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:45:45 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@ int		sh_prompt_get(char **ref)
 {
 	char	*pwd;
 	char	*home;
-	char	*prompt;
+	char	*str;
 	int		psize;
 
 	psize = 0;
-	prompt = ft_strdup(BLACK"21sh: "RESET);
+	str = ft_strdup(BLACK"21sh: "RESET);
 	psize -= ft_strlen(BLACK) + ft_strlen(RESET);
 	if ((pwd = env_getvar("PWD")) != NULL)
 	{
 		if ((home = env_getvar("HOME")) && ft_strstr(pwd, home))
-			prompt = ft_strffjoin(ft_strffjoin(prompt, "~"), pwd + ft_strlen(home));
+			str = ft_strffjoin(ft_strffjoin(str, "~"), pwd + ft_strlen(home));
 		else
-			prompt = ft_strffjoin(prompt, pwd);
+			str = ft_strffjoin(str, pwd);
 	}
-	prompt = ft_strffjoin(prompt, BLACK" >>> "RESET);
+	str = ft_strffjoin(str, BLACK" >>> "RESET);
 	psize -= ft_strlen(BLACK) + ft_strlen(RESET);
-	psize += ft_strlen(prompt);
-	*ref = prompt;
+	psize += ft_strlen(str);
+	*ref = str;
 	return (psize);
 }

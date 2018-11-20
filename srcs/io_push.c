@@ -6,19 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 12:43:54 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 10:05:39 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:47:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-/*
-** We need not to modify the stack between branches in pipes, so we don't
-** use a standard push and don't actually update the head.
-**
-** Also if there is already a redirection for the destination, we will 
-** update the source instead of pushing a new action.
-*/
 
 t_io	*io_push(int dst, int src, t_io *io_stack, int op)
 {
@@ -26,7 +18,7 @@ t_io	*io_push(int dst, int src, t_io *io_stack, int op)
 	t_io	*head;
 
 	head = io_stack;
-	if (op != GREATAND || op != LESSAND)	
+	if (op != GREATAND || op != LESSAND)
 	{
 		while (head)
 		{

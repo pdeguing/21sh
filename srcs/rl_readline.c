@@ -6,32 +6,29 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 07:04:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 13:38:10 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:50:07 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 t_keymap g_keymap[KEY_MAX] = {
-								{KEY_CURSOR_LEFT, &key_cursor_left},
-								{KEY_CURSOR_RIGHT, &key_cursor_right},
-								{KEY_DEL_BACKSPACE, &key_del_backspace},
-								{KEY_DEL_DELETE, &key_del_delete},
-								{KEY_DEL_BEG, &key_del_beg},
-								{KEY_DEL_END, &key_del_end},
-								{KEY_HISTORY_UP, &key_history_up},
-								{KEY_HISTORY_DOWN, &key_history_down},
-								{KEY_NEWLINE, &key_newline},
-								{KEY_CURSOR_BEG, &key_cursor_beg},
-								{KEY_CURSOR_END, &key_cursor_end},
-								{KEY_CTL_ARROW, &key_ctl_arrow},
-								{KEY_COPY, &key_copy},
-								{KEY_PASTE, &key_paste},
-								{KEY_SIG_INT, &key_sig_int},
-								{KEY_SIG_EOF, &key_sig_eof}
-								/*
-								{KEY_HISTORY_SEARCH, &key_history_search},
-								*/
+	{KEY_CURSOR_LEFT, &key_cursor_left},
+	{KEY_CURSOR_RIGHT, &key_cursor_right},
+	{KEY_DEL_BACKSPACE, &key_del_backspace},
+	{KEY_DEL_DELETE, &key_del_delete},
+	{KEY_DEL_BEG, &key_del_beg},
+	{KEY_DEL_END, &key_del_end},
+	{KEY_HISTORY_UP, &key_history_up},
+	{KEY_HISTORY_DOWN, &key_history_down},
+	{KEY_NEWLINE, &key_newline},
+	{KEY_CURSOR_BEG, &key_cursor_beg},
+	{KEY_CURSOR_END, &key_cursor_end},
+	{KEY_CTL_ARROW, &key_ctl_arrow},
+	{KEY_COPY, &key_copy},
+	{KEY_PASTE, &key_paste},
+	{KEY_SIG_INT, &key_sig_int},
+	{KEY_SIG_EOF, &key_sig_eof}
 };
 
 static void	rl_free(t_rl *rl)
@@ -76,7 +73,6 @@ static int	rl_key_control(t_rl *rl)
 {
 	int		i;
 
-//	ft_printf("key = %d\n", rl->key);
 	i = 0;
 	while (i < KEY_MAX)
 	{
@@ -90,10 +86,10 @@ static int	rl_key_control(t_rl *rl)
 	return (0);
 }
 
-char	*rl_readline(const char *prompt, int psize, int mode)
+char		*rl_readline(const char *prompt, int psize, int mode)
 {
-	t_rl	*rl;
-	char	*line;
+	t_rl			*rl;
+	char			*line;
 	static t_dlist	*history = NULL;
 
 	rl = rl_init();

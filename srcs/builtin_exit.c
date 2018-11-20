@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 11:39:05 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 11:57:31 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:46:29 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ int		builtin_exit(char **args)
 {
 	(void)args;
 	raw_mode_disable();
-	exit(EXIT_SUCCESS); // clean exit
+	exit(EXIT_SUCCESS);
 }

@@ -6,13 +6,13 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:25:11 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/17 12:27:17 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:53:54 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static char	*append_char(char *str, char c)
+static char		*append_char(char *str, char c)
 {
 	int		size;
 	char	*new;
@@ -29,7 +29,6 @@ static char	*append_char(char *str, char c)
 	ft_strdel(&str);
 	new[size - 1] = c;
 	return (new);
-
 }
 
 static int		squote(int quote, t_token *token)
@@ -54,7 +53,8 @@ static int		dquote(int quote, t_token *token)
 
 static int		bslash(int quote, char *pchar, t_token *token)
 {
-	if ((!(quote & (Q_BSLASH | Q_SQUOTE)) || ((quote & Q_DQUOTE) && ft_strchr("\\\"\n", *pchar + 1))))
+	if ((!(quote & (Q_BSLASH | Q_SQUOTE))
+				|| ((quote & Q_DQUOTE) && ft_strchr("\\\"\n", *pchar + 1))))
 		quote |= Q_BSLASH;
 	else
 	{
@@ -69,7 +69,7 @@ static int		bslash(int quote, char *pchar, t_token *token)
 ** better quickly, bad is better than nothing.
 */
 
-int		token_get_word(char **pstr, char *pchar, t_token *token)
+int				token_get_word(char **pstr, char *pchar, t_token *token)
 {
 	int		quote;
 
@@ -77,9 +77,8 @@ int		token_get_word(char **pstr, char *pchar, t_token *token)
 	token->type = TOKEN;
 	while (*pchar != '\0')
 	{
-		if (!quote && ft_strchr(";|<>", *pchar))
-			break ;
-		else if (!quote && ft_strchr(" 	", *pchar))
+		if (!quote && (ft_strchr(";|<>", *pchar)
+					|| ft_strchr(" 	", *pchar)))
 			break ;
 		else if (*pchar == '\'')
 			quote = squote(quote, token);
@@ -94,7 +93,7 @@ int		token_get_word(char **pstr, char *pchar, t_token *token)
 		}
 		pchar++;
 	}
-	token->literal = rl_expansion(token->literal); 
+	token->literal = rl_expansion(token->literal);
 	*pstr = pchar;
 	return (1);
 }

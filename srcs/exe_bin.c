@@ -6,13 +6,13 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 16:13:43 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 16:14:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:49:09 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char	**get_path(void)
+static char	**get_path(void)
 {
 	char	*path;
 
@@ -22,7 +22,7 @@ char	**get_path(void)
 	return (ft_strsplit(path, ':'));
 }
 
-int		check_permissions(char *path)
+static int	check_permissions(char *path)
 {
 	if (!access(path, F_OK) && access(path, X_OK))
 	{
@@ -32,7 +32,7 @@ int		check_permissions(char *path)
 	return (0);
 }
 
-int		try_path(char *path, char **args)
+static int	try_path(char *path, char **args)
 {
 	path = ft_strffjoin(path, "/");
 	path = ft_strffjoin(path, args[0]);
@@ -44,7 +44,7 @@ int		try_path(char *path, char **args)
 	return (0);
 }
 
-int		exec_allpath(char **args)
+static int	exec_allpath(char **args)
 {
 	int		i;
 	char	**allpath;
@@ -78,9 +78,6 @@ void		exe_bin(char **args, char flag, t_io **io_stack)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
-		/*
-		ft_printf(RED"cmd: %s\n"RESET, args[0]);
-		*/
 		io_redirect(io_stack);
 		if (exec_allpath(args) == -1)
 		{

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 16:17:20 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/06 07:09:34 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:44:07 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,3 @@ void	key_history_down(t_rl *rl)
 	}
 	rl->cx = rl->row[rl->cy].bsize;
 }
-
-/*
-void	key_history_search(t_shell *sh)
-{
-	clear_line();
-	read_char();
-	add_char_to_buf();
-	search_history(buf);
-}
-*/
