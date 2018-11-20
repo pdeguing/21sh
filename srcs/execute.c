@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 11:46:06 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 16:25:49 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/20 12:16:59 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void		execute(t_ast **root, char flag, t_io *io_stack)
 	head = *root;
 	if (!head)
 		return ;
+	io_print(&io_stack);
 	if (!head->left)
 	{
 		exe_cmd(get_args(&head), flag, &io_stack);

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 16:11:52 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/20 11:39:32 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ struct						s_io
 
 void						io_redirect(t_io **io_stack);
 void						io_free(t_io **io_stack);
+void						io_print(t_io **io_stack);
 
 t_io						*io_push(int dst, int src, t_io *io_stack, int op);
 t_io						*io_stack_dup(t_io *io_stack);

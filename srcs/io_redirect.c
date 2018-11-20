@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 10:16:32 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 16:22:34 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/20 13:23:59 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,25 @@
 ** or whatever.
 */
 
+void	io_print(t_io **io_stack)
+{
+	t_io *head;
+
+	head = *io_stack;
+	ft_printf(RED"stack:\n"RESET);
+	while (head)
+	{
+		ft_printf("{op = %d, copy = %d, into = %d}\n", head->op, head->src, head->dst);
+		head = head->next;
+	}
+	ft_putchar('\n');
+}
+
 void	io_redirect(t_io **io_stack)
 {
 	t_io	*head;
-	t_io	*ref;
 
+	io_print(io_stack);
 	head = *io_stack;
 	while (head)
 	{
@@ -39,19 +53,6 @@ void	io_redirect(t_io **io_stack)
 				head = head->next;
 				continue ;
 			}
-			ref = *io_stack;
-			while (ref && ref != head)
-			{
-				if (head->src == ref->dst)
-					head->src = ref->src;
-				ref = ref->next;
-			}
-			while (ref)
-			{
-				if (ref->op == PIPELINE && head->src == ref->dst)
-					head->src = ref->src;
-				ref = ref->next;
-			}
 		}
 		if (dup2(head->src, head->dst) == -1)
 		{
@@ -61,3 +62,20 @@ void	io_redirect(t_io **io_stack)
 		head = head->next;
 	}
 }
+
+/*
+ * So we have a stack with: {op, src, dst}.
+ *
+ * If op is aggregation:
+ * 							IF src is minus = close dst, move to next and continue
+ * 							ELSE WHILE redo a loop from the start of the stack with ref until we reach head again
+ * 								IF head->src equal ref->dst THEN head->src = ref->src
+ * 								(we do that to replace all previous apparitions of the fd that we are about to aggregate,
+ * 								so that with redirected to another destination a fd that served as a source, we replace it
+ * 								eg. if we redirect 2 to 1 but we previously redirected 3 to 2 then we need to be redirecting
+ * 								3 to 1 instead.
+ * 								the stack would be: 1 > 3 		=>		{op = GREAT, src = 1, dst = 3} 
+ * 													2 >& 1		=>		{op = GREATAND, src = 2, dst = 1}
+ *
+ * 							
+ */
