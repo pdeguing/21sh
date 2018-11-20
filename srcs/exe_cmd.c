@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exe_cmd.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/19 16:22:29 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 16:22:31 by pdeguing         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 char	*g_builtin_name[BUILTIN_NBR] =
@@ -35,6 +47,7 @@ void		exe_cmd(char **args, char flag, t_io **io_stack)
 			{
 				io_redirect(io_stack);
 				g_builtin_func[i](args + 1);
+				free(args);
 				return ;
 			}
 			i++;

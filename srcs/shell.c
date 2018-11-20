@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:19:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 13:40:18 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 15:45:34 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ static void		sh_loop(void)
 		psize = sh_prompt_get(&prompt);
 		line = rl_readline(prompt, psize, DEFAULT);
 		ast = parse(line);
-		/*
 		if (ast)
 			execute(&ast, WAIT, NULL);
-			*/
 		ft_strdel(&prompt);
 		ft_strdel(&line);
 		ast_free(&ast);

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 17:04:21 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 13:40:17 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 15:45:35 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_ast	*parse(char *line)
 			break ;
 		}
 		catch_unexpected(prev, next);
-		return (NULL);
 		ast_insert(&root, ast_new(next));
 		prev = next;
 	}

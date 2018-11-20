@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exe_bin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/19 16:13:43 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/19 16:14:09 by pdeguing         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 char	**get_path(void)
@@ -78,6 +90,7 @@ void		exe_bin(char **args, char flag, t_io **io_stack)
 	}
 	if (pid > 0)
 	{
+		free(args);
 		if (!(flag & WAIT))
 			signal(SIGCHLD, handle_sig_zom);
 		else

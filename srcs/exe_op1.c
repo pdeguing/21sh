@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 09:48:12 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 12:22:31 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/19 16:27:22 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	exe_op_dless(t_ast **root, char flag, t_io *io_stack)
 	if (expand)
 		heredoc = rl_expansion(heredoc);
 	ft_putstr_fd(heredoc, p[WRITE]);
+	ft_strdel(&heredoc);
 	close(p[WRITE]);
 	execute(&head->left, flag, io_push(0, p[READ], io_stack, PIPELINE));
 	close(p[READ]);
