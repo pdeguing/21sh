@@ -6,12 +6,13 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 08:22:00 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/20 13:24:00 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/20 16:48:41 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+/*
 void	exe_op_io(t_ast **root, char flag, t_io *io_stack)
 {
 	t_ast	*head;
@@ -21,8 +22,9 @@ void	exe_op_io(t_ast **root, char flag, t_io *io_stack)
 	fd = ft_atoi(head->token->literal);
 	execute(&head->left, flag, io_push(1, fd, io_stack, IO_NUMBER));
 }
+*/
 
-void	exe_op_great(t_ast **root, char flag, t_io *io_stack)
+void	exe_op_great(t_ast **root, char flag)
 {
 	int		fd;
 	t_ast	*head;
@@ -34,10 +36,11 @@ void	exe_op_great(t_ast **root, char flag, t_io *io_stack)
 		perror(head->right->token->literal);
 		exit(EXIT_FAILURE);
 	}
-	execute(&head->left, flag, io_push(1, fd, io_stack, GREAT));
+	dup2(fd, 1); // 1 or IO_NUMBER if present
 	close(fd);
+	execute(&head->left, flag);
 }
-
+/*
 void	exe_op_less(t_ast **root, char flag, t_io *io_stack)
 {
 	int		fd;
@@ -53,3 +56,4 @@ void	exe_op_less(t_ast **root, char flag, t_io *io_stack)
 	execute(&head->left, flag, io_push(0, fd, io_stack, LESS));
 	close(fd);
 }
+*/
