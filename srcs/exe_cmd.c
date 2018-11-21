@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 16:22:29 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 16:22:31 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/20 18:37:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		(*g_builtin_func[BUILTIN_NBR])(char **) =
 	&builtin_exit,
 };
 
-void		exe_cmd(char **args, char flag, t_io **io_stack)
+void		exe_cmd(char **args, char flag, t_io *io_stack)
 {
 	int		i;
 

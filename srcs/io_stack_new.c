@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/26 15:56:50 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 16:12:56 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/20 18:29:20 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ t_io	*io_stack_new(int dst, int src, int op)
 	new->dst = dst;
 	new->src = src;
 	new->op = op;
+	new->next = NULL;
 	return (new);
 }

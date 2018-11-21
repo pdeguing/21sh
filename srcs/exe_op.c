@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 08:22:00 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 12:22:24 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/20 18:42:27 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	exe_op_io(t_ast **root, char flag, t_io *io_stack)
 	t_ast	*head;
 
 	head = *root;
-	io_stack->dst = ft_atoi(head->token->literal);
 	execute(&head->left, flag, io_stack);
 }
 
 void	exe_op_great(t_ast **root, char flag, t_io *io_stack)
 {
 	int		fd;
+	int		dst;
 	t_ast	*head;
 
 	head = *root;
@@ -33,7 +33,10 @@ void	exe_op_great(t_ast **root, char flag, t_io *io_stack)
 		perror(head->right->token->literal);
 		exit(EXIT_FAILURE);
 	}
-	execute(&head->left, flag, io_push(1, fd, io_stack, GREAT));
+	dst = 1;
+	if (head->left->token->type == IO_NUMBER)
+		dst = ft_atoi(head->left->token->literal);
+	execute(&head->left, flag, io_push(dst, fd, io_stack, GREAT));
 	close(fd);
 }
 

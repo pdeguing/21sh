@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 16:13:43 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 16:49:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/20 18:37:05 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	exec_allpath(char **args)
 	return (-1);
 }
 
-void		exe_bin(char **args, char flag, t_io **io_stack)
+void		exe_bin(char **args, char flag, t_io *io_stack)
 {
 	pid_t		pid;
 
