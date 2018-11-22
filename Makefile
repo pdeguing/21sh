@@ -6,7 +6,7 @@
 #    By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/16 09:34:56 by pdeguing          #+#    #+#              #
-#    Updated: 2018/11/05 07:41:59 by pdeguing         ###   ########.fr        #
+#    Updated: 2018/11/22 08:48:03 by pdeguing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ NAME	= 21sh
 
 SRCS	= srcs/*.c
 
-LIB		= -lft -L./libft/
 LIBFT	= libft/libft.a
+FT_READLINE	= ft_readline/ft_readline.a
 
 all: $(NAME)
 
@@ -27,7 +27,7 @@ $(LIBFT):
 	@ cd libft/ && make
 
 cmp:
-	@ gcc -o $(NAME) $(CFLAGS) $(SRCS) -Iincludes $(LIB) -ltermcap
+	@ gcc -o $(NAME) $(CFLAGS) $(SRCS) -Iincludes $(LIBFT) $(FT_READLINE) -ltermcap
 
 clean:
 	@ /bin/rm -f *.o
