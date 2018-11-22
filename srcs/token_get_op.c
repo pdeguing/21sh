@@ -6,13 +6,51 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:43:15 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/19 08:53:56 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/21 09:29:11 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		token_get_op(char **pstr, char *pchar, t_token *token)
+static int		get_less(char **pstr, char *pchar, t_token *token)
+{
+	pchar++;
+	if (*pchar == '<')
+	{
+		token->type = DLESS;
+		pchar++;
+	}
+	else if (*pchar == '&')
+	{
+		token->type = LESSAND;
+		pchar++;
+	}
+	else
+		token->type = LESS;
+	*pstr = pchar;
+	return (1);
+}
+
+static int		get_great(char **pstr, char *pchar, t_token *token)
+{
+	pchar++;
+	if (*pchar == '>')
+	{
+		token->type = DGREAT;
+		pchar++;
+	}
+	else if (*pchar == '&')
+	{
+		token->type = GREATAND;
+		pchar++;
+	}
+	else
+		token->type = GREAT;
+	*pstr = pchar;
+	return (1);
+}
+
+int				token_get_op(char **pstr, char *pchar, t_token *token)
 {
 	if (*pchar == ';')
 	{
@@ -25,37 +63,9 @@ int		token_get_op(char **pstr, char *pchar, t_token *token)
 		pchar++;
 	}
 	else if (*pchar == '<')
-	{
-		pchar++;
-		if (*pchar == '<')
-		{
-			token->type = DLESS;
-			pchar++;
-		}
-		else if (*pchar == '&')
-		{
-			token->type = LESSAND;
-			pchar++;
-		}
-		else
-			token->type = LESS;
-	}
+		return (get_less(pstr, pchar, token));
 	else if (*pchar == '>')
-	{
-		pchar++;
-		if (*pchar == '>')
-		{
-			token->type = DGREAT;
-			pchar++;
-		}
-		else if (*pchar == '&')
-		{
-			token->type = GREATAND;
-			pchar++;
-		}
-		else
-			token->type = GREAT;
-	}
+		return (get_great(pstr, pchar, token));
 	else
 		pchar++;
 	*pstr = pchar;

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/20 18:38:26 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/21 08:55:05 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ t_ast						*ast_new(t_token *token);
 void						ast_insert(t_ast **root, t_ast *new);
 void						ast_free(t_ast **root);
 
-char						*parse_quote_remove(char *str);
 
 t_ast						*parse(char *input);
 
