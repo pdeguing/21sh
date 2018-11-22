@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 08:41:17 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/21 09:00:00 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/22 10:35:03 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char		*get_heredoc(char *delimiter)
 	while (1)
 	{
 		ft_strdel(&line);
-		line = rl_readline("> ", 2, NO_QUOTE | NO_HISTORY);
+		line = ft_readline("> ", 2, NO_QUOTE | NO_HISTORY);
 		if (!line)
 			line = ft_strnew(0);
 		if (!ft_strcmp(delimiter, line))
