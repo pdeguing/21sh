@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:25:11 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/22 17:41:50 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/23 10:19:20 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ static int		squote(int quote, t_token *token)
 {
 	if (!(quote & (Q_BSLASH | Q_DQUOTE)))
 		quote ^= Q_SQUOTE;
-	else
-		token->literal = append_char(token->literal, '\'');
+	token->literal = append_char(token->literal, '\'');
 	quote &= ~Q_BSLASH;
 	return (quote);
 }
@@ -45,8 +44,7 @@ static int		dquote(int quote, t_token *token)
 {
 	if (!(quote & (Q_BSLASH | Q_SQUOTE)))
 		quote ^= Q_DQUOTE;
-	else
-		token->literal = append_char(token->literal, '\"');
+	token->literal = append_char(token->literal, '\"');
 	quote &= ~Q_BSLASH;
 	return (quote);
 }
@@ -57,10 +55,8 @@ static int		bslash(int quote, char *pchar, t_token *token)
 				|| ((quote & Q_DQUOTE) && ft_strchr("\\\"\n", *pchar + 1))))
 		quote |= Q_BSLASH;
 	else
-	{
 		quote &= ~Q_BSLASH;
-		token->literal = append_char(token->literal, *pchar);
-	}
+	token->literal = append_char(token->literal, *pchar);
 	return (quote);
 }
 
@@ -93,7 +89,7 @@ int				token_get_word(char **pstr, char *pchar, t_token *token)
 		}
 		pchar++;
 	}
-	token->literal = rl_expansion(token->literal);
+	token_expand(&token->literal);
 	*pstr = pchar;
 	return (1);
 }

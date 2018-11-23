@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 15:11:56 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/22 17:53:06 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/23 09:58:51 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,16 @@ static char		*expand(char *arg, char symbol)
 char			*rl_expansion(char *str)
 {
 	char	*symbol;
-	int		pos;
+	int		offset;
 
 	if (str[0] == '~' && (str[1] == '/' || str[1] == '\0'))
 		str = expand(str, '~');
-	pos = 0;
-	while ((symbol = ft_strchr(str + pos, '$')))
+	offset = 0;
+	while ((symbol = ft_strchr(str + offset, '$')))
 	{
-		pos = symbol - str + 1;
 		if (ft_isalnum(*(symbol + 1)))
-			str = expand(str + pos, '$');
+			str = expand(str + offset, '$');
+		offset++;
 	}
 	return (str);
 }
