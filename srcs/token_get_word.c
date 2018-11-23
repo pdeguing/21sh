@@ -6,30 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:25:11 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/23 10:19:20 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/23 11:09:01 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static char		*append_char(char *str, char c)
-{
-	int		size;
-	char	*new;
-
-	size = 1;
-	if (str)
-		size += ft_strlen(str);
-	new = ft_strnew(size + 1);
-	if (!new)
-		return (NULL);
-	new[size] = '\0';
-	if (str)
-		ft_strcpy(new, str);
-	ft_strdel(&str);
-	new[size - 1] = c;
-	return (new);
-}
 
 static int		squote(int quote, t_token *token)
 {

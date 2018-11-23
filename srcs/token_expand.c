@@ -6,13 +6,15 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 08:19:43 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/23 10:19:19 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/23 15:09:14 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		get_lparam(char *str, int start)
+#define NOT_QUOTE	!(quote & (Q_SQUOTE | Q_BSLASH))
+
+static int	get_lparam(char *str, int start)
 {
 	int		i;
 
@@ -22,7 +24,7 @@ int		get_lparam(char *str, int start)
 	return (i - start);
 }
 
-char	*expand_str(char *str, char *param, int start, int lparam)
+static char	*expand_str(char *str, char *param, int start, int lparam)
 {
 	char	*new;
 	char	*expansion;
@@ -46,34 +48,45 @@ char	*expand_str(char *str, char *param, int start, int lparam)
 	new = ft_strfjoin(new, suffix);
 	ft_strdel(&str);
 	return (new);
-}	
+}
 
-void	token_expand(char **pstr)
+char		*expand_param(char *str)
 {
-	char	*str;
 	int		i;
 	int		quote;
-	int		lparam;
+	int		l;
 
-	str = *pstr;
-	if (!str)
-		return ;
 	i = 0;
-	if (*str == '~' && (str[i + 1] == '/' || !str[i + 1]))
-		str = expand_str(str, ft_strdup("HOME"), 0, 1);
 	quote = 0;
-	lparam = 0;
+	l = 0;
 	while (str[i])
 	{
-		if (!(quote & (Q_SQUOTE | Q_BSLASH)) && str[i] == '$' && ft_isalnum(str[i + 1]))
+		if (str[i] == '\'')
+			quote = remove_squote(quote, str + i, &i);
+		else if (str[i] == '\"')
+			quote = remove_dquote(quote, str + i, &i);
+		else if (str[i] == '\\')
+			quote = remove_bslash(quote, str + i, &i);
+		else if (NOT_QUOTE && str[i] == '$' && ft_isalnum(str[i + 1]))
 		{
-			i++;
-			lparam = get_lparam(str, i);
-			str = expand_str(str, ft_strsub(str, i, lparam), i, lparam);
+			l = get_lparam(str, i + 1);
+			str = expand_str(str, ft_strsub(str, i + 1, l), i + 1, l);
 			i = 0;
 		}
 		else
 			i++;
 	}
-	*pstr = str;
+	return (str);
+}
+
+void		token_expand(char **pstr)
+{
+	char	*str;
+
+	str = *pstr;
+	if (!str)
+		return ;
+	if (*str == '~' && (*(str + 1) == '/' || !*(str + 1)))
+		str = expand_str(str, ft_strdup("HOME"), 0, 1);
+	*pstr = expand_param(str);
 }
