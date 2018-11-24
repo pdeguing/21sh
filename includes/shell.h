@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/23 14:59:41 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/23 16:58:49 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int							builtin_exit(char **args);
 
 # define IS_OP(type)		(LESS <= type && type <= GREATAND)
 # define IS_CTLOP(type)		(PIPELINE <= type && type <= SEMICOLON)
+# define IS_ALLOP(type)     (IS_OP(type) || IS_CTLOP(type))
 
 enum						e_type
 {
