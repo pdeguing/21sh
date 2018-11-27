@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 09:47:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/23 16:58:49 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/27 06:59:58 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void						handle_sig(int sig);
 void						handle_childsig(int sig);
 void						handle_sig_zom(int sig);
 
-# define BUILTIN_NBR		6
+# define BUILTIN_NBR		7
 
 int							builtin_echo(char **args);
 int							builtin_cd(char **args);

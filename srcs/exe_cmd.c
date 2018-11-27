@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 16:22:29 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/20 18:37:17 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/27 07:00:06 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*g_builtin_name[BUILTIN_NBR] =
 	"setenv",
 	"unsetenv",
 	"exit",
+	"history"
 };
 
 int		(*g_builtin_func[BUILTIN_NBR])(char **) =
@@ -30,6 +31,7 @@ int		(*g_builtin_func[BUILTIN_NBR])(char **) =
 	&builtin_setenv,
 	&builtin_unsetenv,
 	&builtin_exit,
+	&history_builtin
 };
 
 void		exe_cmd(char **args, char flag, t_io *io_stack)

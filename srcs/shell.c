@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:19:24 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/23 16:51:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/26 11:19:54 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void		sh_loop(void)
 	{
 		psize = sh_prompt_get(&prompt);
 		line = ft_readline(prompt, psize, RL_DEFAULT);
+		line = history_substitution(line);
 		ast = parse(line);
 		if (ast)
 		{
